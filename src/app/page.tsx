@@ -3,7 +3,7 @@ import styles from './page.module.css';
 
 export default function Home() {
   const f = 1;
-  if (f == 12) {
+  if (f == 123) {
     console.log(12344);
   }
 
