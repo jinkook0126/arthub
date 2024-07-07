@@ -2,10 +2,7 @@ import Image from 'next/image';
 import styles from './page.module.css';
 
 export default function Home() {
-  const f = 1;
-  if (f == 5) {
-    console.log(123445);
-  }
+  const foo = true;
 
   return (
     <main className={styles.main}>
