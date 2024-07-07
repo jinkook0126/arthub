@@ -3,8 +3,8 @@ import styles from './page.module.css';
 
 export default function Home() {
   const f = 1;
-  if (f == 12345) {
-    console.log(12344);
+  if (f == 5) {
+    console.log(123445);
   }
 
   return (
