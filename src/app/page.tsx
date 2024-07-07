@@ -4,7 +4,7 @@ import styles from './page.module.css';
 export default function Home() {
   const foo = true;
   const b = true;
-  if (foo == false) {
+  if (foo == true) {
     console.log(12);
   }
 
