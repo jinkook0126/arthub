@@ -3,6 +3,9 @@ import styles from './page.module.css';
 
 export default function Home() {
   const foo = true;
+  if (foo == false) {
+    console.log(1);
+  }
 
   return (
     <main className={styles.main}>
