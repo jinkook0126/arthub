@@ -3,8 +3,9 @@ import styles from './page.module.css';
 
 export default function Home() {
   const foo = true;
+  const b = true;
   if (foo == false) {
-    console.log(1);
+    console.log(12);
   }
 
   return (
