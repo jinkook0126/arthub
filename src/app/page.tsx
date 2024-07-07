@@ -2,9 +2,9 @@ import Image from 'next/image';
 import styles from './page.module.css';
 
 export default function Home() {
-  let f = 1;
+  const f = 1;
   if (f == 1) {
-    console.log(123);
+    console.log(12344);
   }
 
   return (
