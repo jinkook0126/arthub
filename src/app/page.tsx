@@ -3,7 +3,7 @@ import styles from './page.module.css';
 
 export default function Home() {
   const l = 1;
-  if (l == 2) {
+  if (l == 3) {
     console.log(2);
   }
   return (
