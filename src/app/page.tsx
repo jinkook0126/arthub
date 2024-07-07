@@ -2,6 +2,10 @@ import Image from 'next/image';
 import styles from './page.module.css';
 
 export default function Home() {
+  const l = 1;
+  if (l == 2) {
+    console.log(2);
+  }
   return (
     <main className={styles.main}>
       <div className={styles.description}>
