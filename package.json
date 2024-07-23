@@ -1,6 +1,6 @@
 {
   "root": true,
-  "name": "next14-app-toy",
+  "name": "arthub",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,11 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "framer-motion": "^11.3.4",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18"
