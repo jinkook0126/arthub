@@ -1,5 +1,13 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import Provider from './provider';
+
+const naverNeoFonts = localFont({
+  src: '../fonts/NanumSquareNeo-Variable.ttf',
+  display: 'swap',
+  variable: '--font-neo',
+});
 
 export const metadata: Metadata = {
   title: 'Art hub',
@@ -12,8 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body>{children}</body>
+    <html lang='en' className={naverNeoFonts.variable}>
+      <body>
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }
