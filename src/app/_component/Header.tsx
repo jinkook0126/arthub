@@ -37,6 +37,7 @@ function Header() {
         bg='white'
         borderColor='gray.100'
         borderBottomWidth={`${border}rem`}
+        transition='all 0.3s ease-in'
       >
         <Flex h='100%' justify='center' p={isLargerThan992 ? 0 : '1rem'}>
           {isLargerThan992 ? (
