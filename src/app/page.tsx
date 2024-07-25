@@ -1,7 +1,7 @@
 'use client';
 
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { Box, Flex, Img, HStack, Link, useMediaQuery, Text } from '@chakra-ui/react';
+import { Box, Flex, Img, HStack, Link, useMediaQuery, Text, IconButton } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <Box>
       <Box pos='sticky' height={isLargerThan992 ? '4.5rem' : '3.625rem'} top={0} as='header' bg='white'>
-        <Flex h='100%' justify='center' pos='relative'>
+        <Flex h='100%' justify='center' p={isLargerThan992 ? 0 : '1rem'}>
           {isLargerThan992 ? (
             <Box as='section'>
               <Flex align='center' h='100%' w='60.625rem' justify='space-between'>
@@ -81,12 +81,23 @@ export default function Home() {
               </Flex>
             </Box>
           ) : (
-            <Box as='section'>
-              <Flex align='center' h='100%' w='60.625rem' p='1rem' gap='1rem'>
-                <HamburgerIcon w={6} h={6} color='gray.800' />
-                <Img src='/assets/logo.png' w={120} mr={30} />
+            <Flex as='section' w='100%' align='center'>
+              <Flex align='center' gap='1rem'>
+                <IconButton
+                  isRound
+                  colorScheme='gray'
+                  aria-label='사이드 메뉴'
+                  size='md'
+                  variant='outline'
+                  sx={{
+                    border: 'none',
+                  }}
+                  icon={<HamburgerIcon w={6} h={6} color='gray.800' />}
+                />
+
+                <Img src='/assets/logo.png' w={120} />
               </Flex>
-            </Box>
+            </Flex>
           )}
         </Flex>
       </Box>
