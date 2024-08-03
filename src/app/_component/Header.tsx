@@ -35,7 +35,7 @@ function Header() {
         top={0}
         as='header'
         bg='white'
-        borderColor='gray.100'
+        borderColor='gray.200'
         borderBottomWidth={`${border}rem`}
         transition='all 0.3s ease-in'
       >
