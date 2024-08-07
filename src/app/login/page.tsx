@@ -16,7 +16,12 @@ function LoginPage() {
       >
         로그인
       </Text>
-      <Card maxW='26.5rem' p='2.5rem' mx='auto'>
+      <Card
+        maxW='26.5rem'
+        p={isLargerThan992 ? '2.5rem' : 0}
+        mx='auto'
+        boxShadow={isLargerThan992 ? undefined : 'none'}
+      >
         <Flex direction='column' gap='1.5rem'>
           <Box>
             <Text paddingBottom='0.375rem' fontWeight={500}>
