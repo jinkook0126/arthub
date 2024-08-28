@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang='en' className={naverNeoFonts.variable}>
       <body>
         <Provider>
-          <Flex direction='column' justify='center' bg='green.300' minH='100%'>
+          <Flex direction='column' justify='center' minH='100%'>
             <Header />
             {children}
             <Footer />
