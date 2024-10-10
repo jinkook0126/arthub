@@ -1,27 +1,19 @@
-'use client';
-
-import { Box, Text, Card, Flex, Input, Button, useMediaQuery } from '@chakra-ui/react';
+import { Box, Text, Card, Flex, Input, Button } from '@chakra-ui/react';
 
 function FindPassword() {
-  const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   return (
-    <Box pb='5rem' pt={isLargerThan992 ? '5rem' : '2.5rem'} bg={isLargerThan992 ? 'gray.100' : 'white'} flexGrow={1}>
+    <Box pb='5rem' pt={{ base: '5rem', xl: '2.5rem' }} bg={{ base: 'gray.100', xl: 'white' }} flexGrow={1}>
       <Text
         as='h2'
         mb='2.5rem'
-        fontSize={isLargerThan992 ? '2.125rem' : '1.75rem'}
+        fontSize={{ base: '2.125rem', xl: '1.75rem' }}
         fontWeight={500}
-        textAlign={isLargerThan992 ? 'center' : 'left'}
-        pl={isLargerThan992 ? 0 : '1rem'}
+        textAlign={{ base: 'center', xl: 'left' }}
+        pl={{ base: 0, xl: '1rem' }}
       >
         비밀번호 찾기
       </Text>
-      <Card
-        maxW='26.5rem'
-        p={isLargerThan992 ? '2.5rem' : 0}
-        mx='auto'
-        boxShadow={isLargerThan992 ? undefined : 'none'}
-      >
+      <Card maxW='26.5rem' p={{ base: '2.5rem', xl: 0 }} mx='auto' boxShadow={{ base: undefined, xl: 'none' }}>
         <Flex direction='column' gap='1.5rem'>
           <Box>
             <Text paddingBottom='0.375rem' fontWeight={500}>

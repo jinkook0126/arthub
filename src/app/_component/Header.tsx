@@ -31,7 +31,7 @@ function Header() {
     <>
       <Box
         pos='sticky'
-        height={isLargerThan992 ? '4.5rem' : '3.625rem'}
+        height={{ base: '4.5rem', xl: '3.625rem' }}
         top={0}
         as='header'
         bg='white'
@@ -40,7 +40,7 @@ function Header() {
         transition='all 0.3s ease-in'
         zIndex={10}
       >
-        <Flex h='100%' justify='center' p={isLargerThan992 ? 0 : '1rem'}>
+        <Flex h='100%' justify='center' p={{ base: 0, xl: '1rem' }}>
           {isLargerThan992 ? (
             <Box as='section'>
               <Flex align='center' h='100%' w='60.625rem' justify='space-between'>
