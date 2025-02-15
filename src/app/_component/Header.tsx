@@ -40,76 +40,74 @@ function Header() {
         transition='all 0.3s ease-in'
         zIndex={10}
       >
-        <Flex h='100%' justify='center' p={{ base: 0, xl: '1rem' }}>
+        <Flex h='100%' justify='center' p={{ base: 0, xl: '1rem' }} maxW='1280px' mx='auto'>
           {isLargerThan992 ? (
-            <Box as='section'>
-              <Flex align='center' h='100%' w='60.625rem' justify='space-between'>
-                <Flex align='center'>
-                  <Img src='/assets/logo.png' w={120} mr={30} />
-                  <nav>
-                    <HStack spacing='18px'>
-                      <Link
-                        href='/'
-                        as={NextLink}
-                        fontSize='1rem'
-                        fontWeight={500}
-                        color='gray.800'
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                      >
-                        nav A
-                      </Link>
-                      <Link
-                        href='/'
-                        as={NextLink}
-                        fontSize='1rem'
-                        fontWeight={500}
-                        color='gray.800'
-                        textDecoration='none'
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                      >
-                        nav A
-                      </Link>
-                    </HStack>
-                  </nav>
-                </Flex>
-                <Box>
-                  <nav>
-                    <HStack spacing='18px'>
-                      <Link
-                        href='/'
-                        as={NextLink}
-                        fontSize='0.875rem'
-                        fontWeight={400}
-                        color='gray.800'
-                        textDecoration='none'
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                      >
-                        nav A
-                      </Link>
-                      <Link
-                        href='/'
-                        as={NextLink}
-                        fontSize='0.875rem'
-                        fontWeight={400}
-                        color='gray.800'
-                        textDecoration='none'
-                        _hover={{
-                          textDecoration: 'none',
-                        }}
-                      >
-                        nav A
-                      </Link>
-                    </HStack>
-                  </nav>
-                </Box>
+            <Flex as='section' align='center' h='100%' w='100%' justify='space-between'>
+              <Flex align='center'>
+                <Img src='/assets/logo.png' w={120} mr={30} />
+                <nav>
+                  <HStack spacing='18px'>
+                    <Link
+                      href='/'
+                      as={NextLink}
+                      fontSize='1rem'
+                      fontWeight={500}
+                      color='gray.800'
+                      _hover={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      nav A
+                    </Link>
+                    <Link
+                      href='/'
+                      as={NextLink}
+                      fontSize='1rem'
+                      fontWeight={500}
+                      color='gray.800'
+                      textDecoration='none'
+                      _hover={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      nav A
+                    </Link>
+                  </HStack>
+                </nav>
               </Flex>
-            </Box>
+              <Box>
+                <nav>
+                  <HStack spacing='18px'>
+                    <Link
+                      href='/'
+                      as={NextLink}
+                      fontSize='0.875rem'
+                      fontWeight={400}
+                      color='gray.800'
+                      textDecoration='none'
+                      _hover={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      nav A
+                    </Link>
+                    <Link
+                      href='/'
+                      as={NextLink}
+                      fontSize='0.875rem'
+                      fontWeight={400}
+                      color='gray.800'
+                      textDecoration='none'
+                      _hover={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      nav A
+                    </Link>
+                  </HStack>
+                </nav>
+              </Box>
+            </Flex>
           ) : (
             <Flex as='section' w='100%' align='center'>
               <Flex align='center' gap='1rem'>

@@ -4,7 +4,7 @@ import { Flex, Text, Box, Center, Img } from '@chakra-ui/react';
 
 function Banner() {
   return (
-    <Flex w='60.625rem' h={250}>
+    <Flex h='350px'>
       <Flex w='38%' pl='32px' flexDirection='column' justifyContent='center' bg='orange.50'>
         <Text fontWeight='bold' fontSize='xl'>
           Elevate Your Art&apos;s Value with ArtHub
@@ -21,7 +21,6 @@ function Banner() {
         backgroundSize='250%'
         backgroundPosition='center'
         backgroundRepeat='no-repeat'
-        height={250}
         _before={{
           content: '""',
           position: 'absolute',
@@ -35,7 +34,7 @@ function Banner() {
         }}
       >
         <Center pos='relative' zIndex={2} h='100%'>
-          <Img src='/assets/image/banner.jpg' w='280px' borderRadius='5px' boxShadow='0px 0px 6px 0px #222222' />
+          <Img src='/assets/image/banner.jpg' w='500px' borderRadius='5px' boxShadow='0px 0px 6px 0px #222222' />
         </Center>
       </Box>
     </Flex>
