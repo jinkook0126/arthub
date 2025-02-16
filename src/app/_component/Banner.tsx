@@ -4,8 +4,8 @@ import { Flex, Text, Box, Center, Img } from '@chakra-ui/react';
 
 function Banner() {
   return (
-    <Flex h='350px'>
-      <Flex w='38%' pl='32px' flexDirection='column' justifyContent='center' bg='orange.50'>
+    <Flex h='350px' position='relative'>
+      <Box position='absolute' maxW='1280px' mx='auto' left={0} right={0} top='40%'>
         <Text fontWeight='bold' fontSize='xl'>
           Elevate Your Art&apos;s Value with ArtHub
         </Text>
@@ -13,7 +13,8 @@ function Banner() {
           당신의 소중한 작품, <br />
           아트허브가 그 가치를 높여드립니다.
         </Text>
-      </Flex>
+      </Box>
+      <Flex w='42%' pl='32px' flexDirection='column' justifyContent='center' bg='orange.50' />
       <Box
         pos='relative'
         w='62%'

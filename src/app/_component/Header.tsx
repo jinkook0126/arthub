@@ -40,7 +40,7 @@ function Header() {
         transition='all 0.3s ease-in'
         zIndex={10}
       >
-        <Flex h='100%' justify='center' p={{ base: 0, xl: '1rem' }} maxW='1280px' mx='auto'>
+        <Flex h='100%' justify='center' p={{ base: 0, xl: '1rem 0' }} maxW='1280px' mx='auto'>
           {isLargerThan992 ? (
             <Flex as='section' align='center' h='100%' w='100%' justify='space-between'>
               <Flex align='center'>

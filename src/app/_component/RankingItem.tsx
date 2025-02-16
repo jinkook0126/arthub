@@ -12,7 +12,6 @@ function RankingItem({ src }: Props) {
   return (
     <Link href='/'>
       <Flex
-        // transition='all 0.3s ease-in'
         position='relative'
         maxW='230px'
         height='100%'
