@@ -4,8 +4,17 @@ import { Flex, Text, Box, Center, Img } from '@chakra-ui/react';
 
 function Banner() {
   return (
-    <Flex h='350px' position='relative'>
-      <Box position='absolute' maxW='1280px' mx='auto' left={0} right={0} top='40%'>
+    <Flex h={{ base: '410px', xl: '350px' }} position='relative' flexDir={{ base: 'column-reverse', xl: 'row' }}>
+      <Box
+        position='absolute'
+        maxW='1280px'
+        mx='auto'
+        left={0}
+        right={0}
+        top={{ base: 'unset', xl: '40%' }}
+        bottom={{ base: '30px', xl: 'unset' }}
+        textAlign={{ base: 'center', xl: 'left' }}
+      >
         <Text fontWeight='bold' fontSize='xl'>
           Elevate Your Art&apos;s Value with ArtHub
         </Text>
@@ -14,10 +23,11 @@ function Banner() {
           아트허브가 그 가치를 높여드립니다.
         </Text>
       </Box>
-      <Flex w='42%' pl='32px' flexDirection='column' justifyContent='center' bg='orange.50' />
+      <Flex w={{ base: '100%', xl: '42%' }} bg='orange.50' height={{ base: '150px', xl: '100%' }} />
       <Box
         pos='relative'
-        w='62%'
+        flex={1}
+        w={{ base: '100%', xl: '58%' }}
         backgroundImage="url('/assets/image/banner.jpg')"
         backgroundSize='250%'
         backgroundPosition='center'
@@ -35,7 +45,12 @@ function Banner() {
         }}
       >
         <Center pos='relative' zIndex={2} h='100%'>
-          <Img src='/assets/image/banner.jpg' w='500px' borderRadius='5px' boxShadow='0px 0px 6px 0px #222222' />
+          <Img
+            src='/assets/image/banner.jpg'
+            w={{ base: '380px', xl: '500px' }}
+            borderRadius='5px'
+            boxShadow='0px 0px 6px 0px #222222'
+          />
         </Center>
       </Box>
     </Flex>
