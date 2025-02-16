@@ -15,7 +15,7 @@ function Banner() {
         bottom={{ base: '30px', xl: 'unset' }}
         textAlign={{ base: 'center', xl: 'left' }}
       >
-        <Text fontWeight='bold' fontSize='xl'>
+        <Text fontWeight='bold' fontSize={{ base: '18px', xl: 'xl' }}>
           Elevate Your Art&apos;s Value with ArtHub
         </Text>
         <Text mt={6} fontSize='sm'>

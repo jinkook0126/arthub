@@ -1,6 +1,6 @@
 'use client';
 
-import { Text, Flex, Image, Box } from '@chakra-ui/react';
+import { Text, Flex, Image, Box, useMediaQuery } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -8,22 +8,31 @@ type Props = {
   src: string;
 };
 function RankingItem({ src }: Props) {
+  const [isLargerThan768] = useMediaQuery(['(min-width: 768px)'], { ssr: false, fallback: [false] });
+
   const [isHover, setIsHover] = useState(false);
   return (
-    <Link href='/'>
+    <Flex
+      as={Link}
+      href='/'
+      position='relative'
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      height='100%'
+      flex={1}
+    >
       <Flex
-        position='relative'
-        maxW='230px'
-        height='100%'
+        aspectRatio={1}
         bg='#f3f3f3'
-        justifyContent='center'
-        alignItems='center'
-        borderRadius='8px'
         overflow='hidden'
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
+        borderRadius='8px'
+        justify='center'
+        align='center'
+        w={{ base: '150px', md: '100%' }}
       >
-        <Image src={src} height='100%' w='100%' />
+        <Image src={src} w='100%' />
+      </Flex>
+      {isLargerThan768 && (
         <Box position='absolute' left={0} top={0} w='100%' h='100%'>
           <Box
             position='absolute'
@@ -31,7 +40,7 @@ function RankingItem({ src }: Props) {
             bg='black'
             w='100%'
             h='100%'
-            // opacity={0.6}
+            borderRadius='8px'
             opacity={isHover ? 0.6 : 0}
             visibility={isHover ? 'visible' : 'hidden'}
           />
@@ -56,8 +65,22 @@ function RankingItem({ src }: Props) {
             </Text>
           </Box>
         </Box>
-      </Flex>
-    </Link>
+      )}
+      {!isLargerThan768 && (
+        <Flex color='black' pl='12px' pb='12px' flexDir='column' justify='flex-end'>
+          <Text fontSize='16px' fontWeight={700}>
+            이진국
+          </Text>
+          <Text fontSize='13px'>크레용 신짱!!</Text>
+          <Text fontSize='13px' mt='8px' color='gray.500'>
+            현재가
+          </Text>
+          <Text fontSize='15px' fontWeight={700}>
+            100,000,000원
+          </Text>
+        </Flex>
+      )}
+    </Flex>
   );
 }
 
