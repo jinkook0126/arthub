@@ -12,7 +12,7 @@ export default function Home() {
           <Box px={{ base: '16px', md: 0 }}>
             <RankingList />
           </Box>
-          <Box pl={{ base: '16px', md: 0 }}>
+          <Box px={{ base: '16px', md: 0 }}>
             <ArtistList />
           </Box>
         </Flex>

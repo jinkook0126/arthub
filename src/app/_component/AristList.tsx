@@ -1,5 +1,6 @@
-import { Flex, Divider, Text, Box } from '@chakra-ui/react';
+import { Flex, Divider, Text, Box, Button } from '@chakra-ui/react';
 import ArtistItem from './ArtistItem';
+import RightIcon from './RightIcon';
 
 const lists = [
   {
@@ -33,17 +34,33 @@ function ArtistList() {
         <Text fontWeight={700} fontSize='1.5rem'>
           인기있는 아티스트
         </Text>
+        <Button
+          rightIcon={<RightIcon />}
+          variant='link'
+          fontSize={{ base: '14px', md: '16px' }}
+          _hover={{ textDecoration: 'none' }}
+        >
+          전체 아티스트 보기
+        </Button>
       </Flex>
-      <Flex flexDir='column' gap='30px'>
-        <Flex justify='space-between ' h='15rem'>
-          <ArtistItem artist={lists[0]} />
-          <Divider orientation='vertical' h='100%' w='1px' borderColor='gray.400' mx='30px' marginX='2rem' />
+      <Flex flexDir={{ base: 'row', md: 'column' }} gap={{ base: 0, md: '30px' }} overflow='scroll'>
+        <Flex justify='space-between' h='15rem'>
+          <ArtistItem artist={lists[3]} />
+          <Divider orientation='vertical' h='100%' w='1px' borderColor='gray.400' marginX='2rem' />
           <ArtistItem artist={lists[1]} />
         </Flex>
-        <Flex justify='space-between ' h='15rem'>
+        <Divider
+          display={{ base: 'block', md: 'none' }}
+          orientation='vertical'
+          h='auto'
+          w='1px'
+          borderColor='gray.400'
+          marginX='2rem'
+        />
+        <Flex justify='space-between' h='15rem'>
           <ArtistItem artist={lists[2]} />
-          <Divider orientation='vertical' h='100%' w='1px' borderColor='gray.400' mx='30px' marginX='2rem' />
-          <ArtistItem artist={lists[3]} />
+          <Divider orientation='vertical' h='100%' w='1px' borderColor='gray.400' marginX='2rem' />
+          <ArtistItem artist={lists[0]} />
         </Flex>
       </Flex>
     </Box>
