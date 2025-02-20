@@ -8,7 +8,7 @@ type Props = {
   src: string;
 };
 function RankingItem({ src }: Props) {
-  const [isLargerThan768] = useMediaQuery(['(min-width: 768px)'], { ssr: false, fallback: [false] });
+  const [isLargerThan768] = useMediaQuery(['(min-width: 768px)']);
 
   const [isHover, setIsHover] = useState(false);
   return (
@@ -32,7 +32,7 @@ function RankingItem({ src }: Props) {
       >
         <Image src={src} w='100%' />
       </Flex>
-      {isLargerThan768 && (
+      {isLargerThan768 ? (
         <Box position='absolute' left={0} top={0} w='100%' h='100%'>
           <Box
             position='absolute'
@@ -65,8 +65,7 @@ function RankingItem({ src }: Props) {
             </Text>
           </Box>
         </Box>
-      )}
-      {!isLargerThan768 && (
+      ) : (
         <Flex color='black' pl='12px' pb='12px' flexDir='column' justify='flex-end'>
           <Text fontSize='16px' fontWeight={700}>
             이진국
