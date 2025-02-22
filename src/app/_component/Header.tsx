@@ -48,7 +48,7 @@ function Header() {
                 <nav>
                   <HStack spacing='18px'>
                     <Link
-                      href='/'
+                      href='/auction'
                       as={NextLink}
                       fontSize='1rem'
                       fontWeight={500}
@@ -57,7 +57,7 @@ function Header() {
                         textDecoration: 'none',
                       }}
                     >
-                      nav A
+                      옥션
                     </Link>
                     <Link
                       href='/'
