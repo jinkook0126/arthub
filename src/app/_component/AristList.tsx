@@ -30,7 +30,14 @@ const lists = [
 function ArtistList() {
   return (
     <Box>
-      <Flex align='center' justify='space-between' mb='1.5rem'>
+      <Flex
+        align='center'
+        justify='space-between'
+        mb='1.5rem'
+        borderBottomWidth={3}
+        paddingBottom='24px'
+        borderColor='black'
+      >
         <Text fontWeight={700} fontSize='1.5rem'>
           인기있는 아티스트
         </Text>
@@ -63,6 +70,9 @@ function ArtistList() {
           <ArtistItem artist={lists[0]} />
         </Flex>
       </Flex>
+      <Box mt='24px'>
+        <Text>전체 작품 보기</Text>
+      </Box>
     </Box>
   );
 }

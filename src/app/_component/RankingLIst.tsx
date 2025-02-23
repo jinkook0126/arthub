@@ -6,7 +6,14 @@ import RightIcon from './RightIcon';
 function RankingList() {
   return (
     <Box flexDir='column'>
-      <Flex align='center' justify='space-between' mb='1.5rem'>
+      <Flex
+        align='center'
+        justify='space-between'
+        mb='1.5rem'
+        borderBottomWidth={3}
+        paddingBottom='24px'
+        borderColor='black'
+      >
         <Text fontWeight={700} fontSize='1.5rem'>
           지금 HOT한 경매 상품
         </Text>

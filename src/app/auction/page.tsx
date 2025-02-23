@@ -1,10 +1,12 @@
-import { Box } from '@chakra-ui/react';
-import SaleStatusTabs from './_component/SaleStatusTabs';
+import { Flex } from '@chakra-ui/react';
+import SearchFilter from './_component/SearchFilter';
+import AuctionList from './_component/AuctionList';
 
 export default function Home() {
   return (
-    <Box flexGrow={1} maxW='1280px' bg='red.50' mx='auto' w='100%'>
-      <SaleStatusTabs />
-    </Box>
+    <Flex flexDir='column' flexGrow={1} maxW='1280px' mx='auto' w='100%' px={{ base: '16px', xl: 0 }}>
+      <SearchFilter />
+      <AuctionList />
+    </Flex>
   );
 }
