@@ -29,7 +29,7 @@ function ArtistItem({ artist: { name, intro, uri } }: Props) {
         overflow='hidden'
         bg='gray.100'
         maxW='280px'
-        w={{ base: '184px', md: 'unset' }}
+        w={{ base: '184px', md: '100%' }}
         h={{ base: '184px', md: 'unset' }}
       >
         <Image src={uri} objectFit='cover' objectPosition='center' h='100%' w='100%' />

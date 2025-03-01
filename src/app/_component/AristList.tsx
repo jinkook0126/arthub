@@ -1,4 +1,6 @@
-import { Flex, Divider, Text, Box, Button } from '@chakra-ui/react';
+'use client';
+
+import { Center, Flex, Divider, Text, Box, Button, useMediaQuery } from '@chakra-ui/react';
 import ArtistItem from './ArtistItem';
 import RightIcon from './RightIcon';
 
@@ -28,6 +30,7 @@ const lists = [
   },
 ];
 function ArtistList() {
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   return (
     <Box>
       <Flex
@@ -41,14 +44,16 @@ function ArtistList() {
         <Text fontWeight={700} fontSize='1.5rem'>
           인기있는 아티스트
         </Text>
-        <Button
-          rightIcon={<RightIcon />}
-          variant='link'
-          fontSize={{ base: '14px', md: '16px' }}
-          _hover={{ textDecoration: 'none' }}
-        >
-          전체 아티스트 보기
-        </Button>
+        {isLargerThan768 && (
+          <Button
+            rightIcon={<RightIcon />}
+            variant='link'
+            fontSize={{ base: '14px', md: '16px' }}
+            _hover={{ textDecoration: 'none' }}
+          >
+            전체 아티스트 보기
+          </Button>
+        )}
       </Flex>
       <Flex flexDir={{ base: 'row', md: 'column' }} gap={{ base: 0, md: '30px' }} overflow='scroll'>
         <Flex justify='space-between' h='15rem'>
@@ -70,9 +75,13 @@ function ArtistList() {
           <ArtistItem artist={lists[0]} />
         </Flex>
       </Flex>
-      <Box mt='24px'>
-        <Text>전체 작품 보기</Text>
-      </Box>
+      {!isLargerThan768 && (
+        <Center>
+          <Button variant='outline' mt='3rem' alignSelf='center' size='lg'>
+            <Text fontWeight={400}>전체 아티스트 보기</Text>
+          </Button>
+        </Center>
+      )}
     </Box>
   );
 }

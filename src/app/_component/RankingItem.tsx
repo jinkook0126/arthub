@@ -22,15 +22,20 @@ function RankingItem({ src }: Props) {
       flex={1}
     >
       <Flex
-        aspectRatio={1}
+        // aspectRatio={1}
         bg='#f3f3f3'
         overflow='hidden'
         borderRadius='8px'
         justify='center'
         align='center'
         w={{ base: '150px', md: '100%' }}
+        _before={{
+          content: `""`,
+          display: 'block',
+          paddingBottom: '100%',
+        }}
       >
-        <Image src={src} w='100%' />
+        <Image src={src} w='100%' flexShrink={0} />
       </Flex>
       {isLargerThan768 ? (
         <Box position='absolute' left={0} top={0} w='100%' h='100%'>
