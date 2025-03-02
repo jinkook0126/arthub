@@ -12,7 +12,7 @@ function AuctionItem({ uri }: Props) {
   return (
     <GridItem
       as={NextLink}
-      href='/'
+      href='/auction/1'
       w='100%'
       minH='376px'
       display='flex'
