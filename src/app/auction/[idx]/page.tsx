@@ -1,12 +1,14 @@
-import { Center, Box, Flex, Text, VStack } from '@chakra-ui/react';
+import { Image, Center, Box, Flex, Text, VStack } from '@chakra-ui/react';
 
 function AuctionDetail() {
   return (
     <Box as='main' flexGrow={1} height='100%'>
       <Box maxW='1280px' mx='auto'>
         <Flex as='article' pt='3rem' flexWrap='wrap' justify='space-between' pos='relative' gap='80px'>
-          <Box h='2000px' bg='green.50' flex='1'>
-            <Text>hello</Text>
+          <Box bg='green.50' flex='1'>
+            <Center bg='#f3f3f3' borderRadius='0.375rem' w='100%' overflow='hidden' height='350px'>
+              <Image src='/assets/image/sample/shinzzang.png' objectFit='contain' w='100%' h='100%' />
+            </Center>
           </Box>
           <Box w='28rem' pos='sticky' bottom={0}>
             <Box pos='sticky' top='calc(3.625rem + 3rem)' overflowX='hidden' overflowY='scroll'>

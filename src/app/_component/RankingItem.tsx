@@ -22,7 +22,6 @@ function RankingItem({ src }: Props) {
       flex={1}
     >
       <Flex
-        // aspectRatio={1}
         bg='#f3f3f3'
         overflow='hidden'
         borderRadius='8px'
