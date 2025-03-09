@@ -1,16 +1,19 @@
-import { Image, Center, Box, Flex, Text, VStack } from '@chakra-ui/react';
+import { Image, Center, Box, Flex, Text, VStack, Divider } from '@chakra-ui/react';
+import ArtDetail from './_component/ArtDetail';
 
 function AuctionDetail() {
   return (
     <Box as='main' flexGrow={1} height='100%'>
-      <Box maxW='1280px' mx='auto'>
+      <Box maxW='1280px' mx='auto' mb='140px'>
         <Flex as='article' pt='3rem' flexWrap='wrap' justify='space-between' pos='relative' gap='80px'>
-          <Box bg='green.50' flex='1'>
+          <Box flex={1}>
             <Center bg='#f3f3f3' borderRadius='0.375rem' w='100%' overflow='hidden' height='530px'>
               <Box height='530px'>
                 <Image src='/assets/image/sample/kerokero.png' objectFit='contain' w='100%' h='100%' />
               </Box>
             </Center>
+            <Divider my='60px' />
+            <ArtDetail />
           </Box>
           <Box w='28rem' pos='sticky' bottom={0}>
             <Box pos='sticky' top='calc(3.625rem + 3rem)' overflowX='hidden' overflowY='scroll'>
