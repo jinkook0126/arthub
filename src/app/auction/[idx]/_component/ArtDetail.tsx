@@ -71,11 +71,11 @@ function ArtDetail() {
           </Text>
         </Box>
         <Box pt='16px'>
-          <Flex>
+          <Flex flexDir={{ base: 'column', xl: 'row' }}>
             <Box minW='196px' height='254px' borderRadius='6px' overflow='hidden'>
               <Image objectFit='cover' w='100%' height='100%' src='/assets/image/sample/artist3.jpeg' />
             </Box>
-            <Box flex={1} pl='16px'>
+            <Box flex={1} pl={{ base: 0, xl: '16px' }} pt={{ base: '1rem', xl: 0 }}>
               <Link href='/auction' as={NextLink} fontSize='1.125rem' fontWeight={700} color='gray.700'>
                 <Flex alignItems='center'>
                   <Text fontWeight={700} fontSize='1rem' color='black'>
@@ -84,7 +84,6 @@ function ArtDetail() {
                   <ChevronRightIcon w='24px' h='24px' />
                 </Flex>
               </Link>
-
               <Text mt='8px' fontSize='1rem' color='gray.700'>
                 가빈 작가는 빛과 감성, 향을 담아낸다. 특정화하지 않은 인물을 통해 여러 가지 감정을 다채로운 색감과 빛
                 표현에 중점을 두어 감상자에게 힐링을 전하고자 한다
