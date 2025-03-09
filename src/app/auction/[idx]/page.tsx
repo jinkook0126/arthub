@@ -26,8 +26,8 @@ function AuctionDetail() {
               overflow='hidden'
               height={{ base: '400px', xl: '530px' }}
             >
-              <Box w={{ base: '100%', xl: 'unset' }} height={{ base: '400px', xl: '530px' }}>
-                <Image src='/assets/image/sample/kerokero.png' objectFit='contain' w='100%' h='100%' />
+              <Box w='100%' height={{ base: '400px', xl: '530px' }} pos='relative'>
+                <Image pos='absolute' src='/assets/image/sample/kerokero.png' objectFit='contain' w='100%' h='100%' />
               </Box>
             </Center>
             <Divider my='60px' />

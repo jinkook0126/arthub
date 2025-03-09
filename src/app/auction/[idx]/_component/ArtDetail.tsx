@@ -72,8 +72,15 @@ function ArtDetail() {
         </Box>
         <Box pt='16px'>
           <Flex flexDir={{ base: 'column', xl: 'row' }}>
-            <Box minW='196px' height='254px' borderRadius='6px' overflow='hidden'>
-              <Image objectFit='cover' w='100%' height='100%' src='/assets/image/sample/artist3.jpeg' />
+            <Box minW='196px' height='254px' borderRadius='6px' overflow='hidden' pos='relative'>
+              <Image
+                pos='absolute'
+                display='block'
+                objectFit='cover'
+                w='100%'
+                height='100%'
+                src='/assets/image/sample/artist3.jpeg'
+              />
             </Box>
             <Box flex={1} pl={{ base: 0, xl: '16px' }} pt={{ base: '1rem', xl: 0 }}>
               <Link href='/auction' as={NextLink} fontSize='1.125rem' fontWeight={700} color='gray.700'>
