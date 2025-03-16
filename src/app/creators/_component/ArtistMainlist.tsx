@@ -1,15 +1,21 @@
 'use client';
 
-import { Flex, Text, Box, Tag } from '@chakra-ui/react';
+import { Flex, Text, Box, Tag, useMediaQuery } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { useEffect, useState } from 'react';
+import React, { RefObject, useEffect, useState } from 'react';
 import { ICreatorGroup } from '@/model/artist';
 import mock from '../_lib/creators';
+
+type RefsType = {
+  [key: string]: RefObject<HTMLDivElement>;
+};
 
 const chosungList = ['가', '나', '다', '라', '마', '바', '사', '아', '자', '차', '카', '타', '파', '하', 'ABC'];
 
 function ArtistMainlist() {
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const [refs, setRefs] = useState<RefsType>({});
   const [selected, setSelected] = useState('가');
   const [artists, setArtist] = useState<ICreatorGroup[]>([]);
   const getChosungGroup = (char: string) => {
@@ -44,7 +50,23 @@ function ArtistMainlist() {
   };
   const onFilterClick = (filter: string) => {
     setSelected(filter);
+    const target = refs[filter]?.current;
+    if (target) {
+      const offset = isLargerThan768 ? 100 : 150;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({
+        top,
+        behavior: 'smooth',
+      });
+    }
   };
+  useEffect(() => {
+    const newRefs = chosungList.reduce<RefsType>((acc, chosung) => {
+      acc[chosung] = React.createRef();
+      return acc;
+    }, {});
+    setRefs(newRefs);
+  }, []);
   useEffect(() => {
     const result: ICreatorGroup[] = chosungList.map(item => ({ filter: item, lists: [] }));
     if (!mock) {
@@ -113,7 +135,7 @@ function ArtistMainlist() {
       </Flex>
       <Flex px={{ base: '1.25rem', xl: 0 }} flex={1} mb='255px' flexDir='column' gap='2rem' w='100%'>
         {artists.map(item => (
-          <Box key={`lists-${item.filter}`}>
+          <Box key={`lists-${item.filter}`} ref={refs[item.filter]}>
             <Box h='3.75rem' borderBottomWidth={1} borderColor='black'>
               <Text lineHeight='29px' fontWeight={700} fontSize='1.5rem'>
                 {item.filter}
