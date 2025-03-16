@@ -1,6 +1,7 @@
 'use client';
 
 import { Flex, Text, Box, Tag } from '@chakra-ui/react';
+import NextLink from 'next/link';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import { ICreatorGroup } from '@/model/artist';
@@ -9,6 +10,7 @@ import mock from '../_lib/creators';
 const chosungList = ['가', '나', '다', '라', '마', '바', '사', '아', '자', '차', '카', '타', '파', '하', 'ABC'];
 
 function ArtistMainlist() {
+  const [selected, setSelected] = useState('가');
   const [artists, setArtist] = useState<ICreatorGroup[]>([]);
   const getChosungGroup = (char: string) => {
     const initialCode = char.charCodeAt(0) - 44032;
@@ -39,6 +41,9 @@ function ArtistMainlist() {
     ];
     const chosungIndex = Math.floor(initialCode / 588);
     return chosungMap[chosungIndex];
+  };
+  const onFilterClick = (filter: string) => {
+    setSelected(filter);
   };
   useEffect(() => {
     const result: ICreatorGroup[] = chosungList.map(item => ({ filter: item, lists: [] }));
@@ -89,15 +94,18 @@ function ArtistMainlist() {
       >
         {chosungList.map((item, idx) => (
           <Flex
+            as='button'
             key={`filter-${item}`}
+            bg={selected === item ? 'gray.500' : 'white'}
             minW={idx !== chosungList.length - 1 ? '24px' : '44px'}
             height='24px'
             justify='center'
             align='center'
             borderRadius='4px'
             borderWidth={1}
+            onClick={() => onFilterClick(item)}
           >
-            <Text color='gray.500' lineHeight='22px' fontSize='1rem'>
+            <Text color={selected === item ? 'white' : 'gray.500'} lineHeight='22px' fontSize='1rem'>
               {item}
             </Text>
           </Flex>
@@ -115,6 +123,8 @@ function ArtistMainlist() {
               <Flex flexDir='column'>
                 {item.lists.map((creator, idx) => (
                   <Flex
+                    href='/'
+                    as={NextLink}
                     key={creator.creatorId}
                     justify='space-between'
                     align='center'
@@ -123,6 +133,8 @@ function ArtistMainlist() {
                     height={{ bae: 'unset', xl: '58px' }}
                     px='0.625rem'
                     borderColor='black'
+                    _hover={{ bg: 'black', color: 'white' }}
+                    role='group'
                   >
                     <Flex
                       align='center'
@@ -136,9 +148,10 @@ function ArtistMainlist() {
                       <Flex w='100%' gap='0.625rem' align='center'>
                         {creator.tags.map(tag => (
                           <Tag
+                            variant='outline'
+                            _groupHover={{ bg: 'gray.500', color: 'white' }}
                             key={`${creator.creatorId}-${tag}`}
                             size='md'
-                            colorScheme='gray'
                             fontWeight='regular'
                             color='gray.400'
                           >
