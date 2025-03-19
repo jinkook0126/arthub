@@ -1,4 +1,5 @@
-import { Image, Box, Flex, Text, Center, Tag, Divider } from '@chakra-ui/react';
+import { Image, Box, Flex, Text, Center, Tag, Divider, Grid } from '@chakra-ui/react';
+import ParticipationItem from './_component/ParticipationItem';
 
 const creatorDetailPage = () => (
   <Flex gap='2.5rem' flexDir='column' flexGrow={1} w='100%'>
@@ -55,7 +56,7 @@ const creatorDetailPage = () => (
                   판매중
                 </Text>
                 <Text color='white' fontWeight={700} fontSize='1.5rem' lineHeight='29px'>
-                  10{' '}
+                  10
                   <Text as='span' fontSize='1.125rem'>
                     점
                   </Text>
@@ -67,7 +68,7 @@ const creatorDetailPage = () => (
                   판매종료
                 </Text>
                 <Text color='white' fontWeight={700} fontSize='1.5rem' lineHeight='29px'>
-                  0{' '}
+                  0
                   <Text as='span' fontSize='1.125rem'>
                     점
                   </Text>
@@ -78,6 +79,22 @@ const creatorDetailPage = () => (
         </Flex>
       </Flex>
     </Center>
+    <Flex mx='auto' maxW='1280px' w='100%' gap='1.25rem' flexDir='column'>
+      <Box h='62px' w='100%' borderBottomWidth={2} borderColor='black'>
+        <Text as='h2' fontWeight={700} fontSize='1.5rem' lineHeight='29px' pt='0.5rem'>
+          참여작품
+        </Text>
+      </Box>
+      <Box pb='70px'>
+        <Grid templateColumns='repeat(5,minmax(0,1fr))' rowGap='15px'>
+          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
+          <ParticipationItem uri='/' imgUri='/assets/image/sample/art2.jpg' />
+          <ParticipationItem uri='/' imgUri='/assets/image/sample/art3.jpg' />
+          <ParticipationItem uri='/' imgUri='/assets/image/sample/art2.jpg' />
+          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
+        </Grid>
+      </Box>
+    </Flex>
   </Flex>
 );
 export default creatorDetailPage;
