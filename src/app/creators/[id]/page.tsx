@@ -3,7 +3,7 @@ import ParticipationItem from './_component/ParticipationItem';
 
 const creatorDetailPage = () => (
   <Flex gap='2.5rem' flexDir='column' flexGrow={1} w='100%'>
-    <Center py='2.5rem' bg='gray.700' w='100%'>
+    <Center py={{ base: '30px', xl: '2.5rem' }} bg='gray.700' w='100%' px={{ base: '1.25rem', xl: 0 }}>
       <Flex mx='auto' maxW='1280px' w='100%' gap='1.25rem' flexDir='column'>
         <Flex gap='2.5rem' align='center'>
           <Text as='h1' maxW='364px' lineHeight='46px' fontSize='2rem' fontWeight={700} color='white' w='100%'>
@@ -22,7 +22,13 @@ const creatorDetailPage = () => (
           </Flex>
         </Flex>
         <Flex gap='2.5rem'>
-          <Box minW='364px' minH='364px' overflow='hidden' borderRadius='10px' pos='relative'>
+          <Box
+            minW={{ base: '120px', xl: '364px' }}
+            minH={{ base: '120px', xl: '364px' }}
+            overflow='hidden'
+            borderRadius='10px'
+            pos='relative'
+          >
             <Image
               src='/assets/image/sample/artist4.jpeg'
               w='100%'
@@ -85,8 +91,8 @@ const creatorDetailPage = () => (
           참여작품
         </Text>
       </Box>
-      <Box pb='70px'>
-        <Grid templateColumns='repeat(5,minmax(0,1fr))' rowGap='15px'>
+      <Box pb='70px' px={{ base: '1rem', xl: 0 }}>
+        <Grid templateColumns={{ base: 'repeat(3,minmax(0,1fr))', xl: 'repeat(5,minmax(0,1fr))' }} rowGap='15px'>
           <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
           <ParticipationItem uri='/' imgUri='/assets/image/sample/art2.jpg' />
           <ParticipationItem uri='/' imgUri='/assets/image/sample/art3.jpg' />
