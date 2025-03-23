@@ -3,12 +3,12 @@
 import { Image, Box, Center, Divider, Flex, Tag, Text, useMediaQuery } from '@chakra-ui/react';
 
 function CreatorHeader() {
-  const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
 
   return (
     <Center py={{ base: '30px', xl: '2.5rem' }} bg='gray.700' w='100%' px={{ base: '1.25rem', xl: 0 }}>
       <Flex mx='auto' maxW='1280px' w='100%' gap='1.25rem' flexDir='column'>
-        {isLargerThan768 && (
+        {isLargerThan992 && (
           <Flex gap='2.5rem' align='center'>
             <Text as='h1' maxW='364px' lineHeight='46px' fontSize='2rem' fontWeight={700} color='white' w='100%'>
               이진국
@@ -46,7 +46,7 @@ function CreatorHeader() {
                 left={0}
               />
             </Box>
-            {!isLargerThan768 && (
+            {!isLargerThan992 && (
               <Flex gap='.5rem' align='center' flexDir='column'>
                 <Text as='h1' maxW='364px' lineHeight='32px' fontSize='1.25rem' fontWeight={700} color='white' w='100%'>
                   이진국
