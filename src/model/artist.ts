@@ -4,9 +4,18 @@ export interface ICreatorRequestBody {
   creatorTags: string;
 }
 export interface ICreator {
+  id: number;
   creatorName: string;
-  tags: string[];
-  creatorId: string;
+  creatorDesc: string;
+  creatorThumbmail: '';
+  creatorTags: string[];
+  createdAt: Date;
+}
+
+export interface ICreatorResponse {
+  success: boolean;
+  msg: string;
+  lists: ICreator[];
 }
 export interface ICreatorGroup {
   filter: string;

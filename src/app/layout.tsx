@@ -5,6 +5,7 @@ import { Flex } from '@chakra-ui/react';
 import Provider from './provider';
 import Header from './_component/Header';
 import Footer from './_component/Footer';
+import RQProvider from './RQProvider';
 
 const naverNeoFonts = localFont({
   src: '../fonts/NanumSquareNeo-Variable.ttf',
@@ -26,11 +27,13 @@ export default function RootLayout({
     <html lang='en' className={naverNeoFonts.variable}>
       <body>
         <Provider>
-          <Flex direction='column' justify='center' minH='100%'>
-            <Header />
-            {children}
-            <Footer />
-          </Flex>
+          <RQProvider>
+            <Flex direction='column' justify='center' minH='100%'>
+              <Header />
+              {children}
+              <Footer />
+            </Flex>
+          </RQProvider>
         </Provider>
       </body>
     </html>

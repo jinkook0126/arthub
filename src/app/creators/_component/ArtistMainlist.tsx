@@ -4,16 +4,20 @@ import { Flex, Text, Box, Tag, useMediaQuery } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import React, { RefObject, useEffect, useState } from 'react';
-import { ICreatorGroup } from '@/model/artist';
-import mock from '../_lib/creators';
+import { ICreator, ICreatorGroup } from '@/model/artist';
 
+type ArtistMainlistProps = {
+  creatorLists?: ICreator[];
+};
 type RefsType = {
   [key: string]: RefObject<HTMLDivElement>;
 };
 
 const chosungList = ['가', '나', '다', '라', '마', '바', '사', '아', '자', '차', '카', '타', '파', '하', 'ABC'];
 
-function ArtistMainlist() {
+function ArtistMainlist({ creatorLists = [] }: ArtistMainlistProps) {
+  // const { data: creatorLists } = useQuery({ queryKey: ['creators'], queryFn: getCreatorsList });
+
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
   const [refs, setRefs] = useState<RefsType>({});
   const [selected, setSelected] = useState('가');
@@ -48,6 +52,7 @@ function ArtistMainlist() {
     const chosungIndex = Math.floor(initialCode / 588);
     return chosungMap[chosungIndex];
   };
+
   const onFilterClick = (filter: string) => {
     setSelected(filter);
     const target = refs[filter]?.current;
@@ -69,11 +74,11 @@ function ArtistMainlist() {
   }, []);
   useEffect(() => {
     const result: ICreatorGroup[] = chosungList.map(item => ({ filter: item, lists: [] }));
-    if (!mock) {
+    if (!creatorLists) {
       setArtist(result);
       return;
     }
-    mock.forEach(element => {
+    creatorLists.forEach(element => {
       const firstChar = element.creatorName.charAt(0);
       const group = getChosungGroup(firstChar);
       result.forEach(cho => {
@@ -83,7 +88,7 @@ function ArtistMainlist() {
       });
     });
     setArtist(result);
-  }, [mock]);
+  }, [creatorLists]);
   return (
     <Flex
       flexWrap='wrap'
@@ -110,8 +115,8 @@ function ArtistMainlist() {
           '::-webkit-scrollbar': {
             display: 'none',
           },
-          '-ms-overflow-style': 'none',
-          'scrollbar-width': 'none',
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
         }}
       >
         {chosungList.map((item, idx) => (
@@ -147,7 +152,7 @@ function ArtistMainlist() {
                   <Flex
                     href='/'
                     as={NextLink}
-                    key={creator.creatorId}
+                    key={creator.id}
                     justify='space-between'
                     align='center'
                     borderBottomWidth={idx === item.lists.length - 1 ? 0 : 1}
@@ -168,11 +173,11 @@ function ArtistMainlist() {
                         <Text>{creator.creatorName}</Text>
                       </Box>
                       <Flex w='100%' gap='0.625rem' align='center'>
-                        {creator.tags.map(tag => (
+                        {creator.creatorTags.map(tag => (
                           <Tag
                             variant='outline'
                             _groupHover={{ bg: 'gray.500', color: 'white' }}
-                            key={`${creator.creatorId}-${tag}`}
+                            key={`${creator.id}-${tag}`}
                             size='md'
                             fontWeight='regular'
                             color='gray.400'
