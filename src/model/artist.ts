@@ -21,3 +21,9 @@ export interface ICreatorGroup {
   filter: string;
   lists: ICreator[];
 }
+
+export interface ICreatorDetailResponse {
+  success: boolean;
+  msg: string;
+  creator: ICreator;
+}

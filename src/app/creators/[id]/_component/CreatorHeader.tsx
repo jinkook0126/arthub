@@ -1,17 +1,17 @@
 'use client';
 
+import { ICreator } from '@/model/artist';
 import { Image, Box, Center, Divider, Flex, Tag, Text, useMediaQuery } from '@chakra-ui/react';
 
-function CreatorHeader() {
+function CreatorHeader({ creator }: { creator: ICreator | undefined }) {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
-
   return (
     <Center py={{ base: '30px', xl: '2.5rem' }} bg='gray.700' w='100%' px={{ base: '1.25rem', xl: 0 }}>
       <Flex mx='auto' maxW='1280px' w='100%' gap='1.25rem' flexDir='column'>
         {isLargerThan992 && (
           <Flex gap='2.5rem' align='center'>
             <Text as='h1' maxW='364px' lineHeight='46px' fontSize='2rem' fontWeight={700} color='white' w='100%'>
-              이진국
+              {creator?.creatorName}
             </Text>
             <Flex align='center' gap='0.625rem'>
               <Tag bg='gray.500' color='white' size='lg'>

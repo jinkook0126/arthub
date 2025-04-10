@@ -150,7 +150,7 @@ function ArtistMainlist({ creatorLists = [] }: ArtistMainlistProps) {
               <Flex flexDir='column'>
                 {item.lists.map((creator, idx) => (
                   <Flex
-                    href='/'
+                    href={`/creators/${creator.id}`}
                     as={NextLink}
                     key={creator.id}
                     justify='space-between'
