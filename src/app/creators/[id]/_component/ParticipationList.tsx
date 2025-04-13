@@ -1,9 +1,10 @@
 'use client';
 
 import { Text, Flex, Box, Grid } from '@chakra-ui/react';
+import { IArtPreivew } from '@/model/art';
 import ParticipationItem from './ParticipationItem';
 
-function ParticipationList() {
+function ParticipationList({ artList }: { artList: IArtPreivew[] }) {
   return (
     <Flex mx='auto' maxW='1280px' w='100%' gap='1.25rem' flexDir='column'>
       <Box
@@ -18,25 +19,24 @@ function ParticipationList() {
         </Text>
       </Box>
       <Box pb='70px' px={{ base: '1rem', xl: 0 }}>
-        <Grid
-          templateColumns={{ base: 'repeat(3,minmax(0,1fr))', xl: 'repeat(5,minmax(0,1fr))' }}
-          gap={{ base: '10px', xl: '15px' }}
-        >
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art2.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art3.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art2.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-          <ParticipationItem uri='/' imgUri='/assets/image/sample/art1.jpg' />
-        </Grid>
+        {artList.length === 0 ? (
+          <Text fontSize='1.25rem' fontWeight={700} color='gray.500' textAlign='center'>
+            참여작품이 없습니다.
+          </Text>
+        ) : (
+          <Grid
+            templateColumns={{ base: 'repeat(3,minmax(0,1fr))', xl: 'repeat(5,minmax(0,1fr))' }}
+            gap={{ base: '10px', xl: '15px' }}
+          >
+            {artList.map(art => (
+              <ParticipationItem
+                key={`art-${art.id}`}
+                uri={`/auction/${art.id}`}
+                imgUri={`${process.env.NEXT_PUBLIC_IMAGE_URL}${art.url}`}
+              />
+            ))}
+          </Grid>
+        )}
       </Box>
     </Flex>
   );

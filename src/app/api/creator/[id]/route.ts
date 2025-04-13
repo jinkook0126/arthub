@@ -6,14 +6,25 @@ const prisma = new PrismaClient();
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
   try {
     const { id } = params;
-    const res = await prisma.creators.findUnique({
+    const creator = await prisma.creators.findUnique({
       where: {
         id,
       },
     });
+    const art = await prisma.art.findMany({
+      where: {
+        sellerId: id,
+      },
+      select: {
+        url: true,
+        id: true,
+        isAuctionActive: true,
+      },
+    });
     return NextResponse.json({
       sucess: true,
-      creator: { ...res, id: Number(res?.id) },
+      creator: { ...creator, id: Number(creator?.id) },
+      art: art.map(item => ({ ...item, id: Number(item.id) })),
     });
   } catch (error) {
     console.error('prisma get error :', error);

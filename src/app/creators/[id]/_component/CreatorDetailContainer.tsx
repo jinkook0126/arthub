@@ -15,8 +15,8 @@ function CreatorDetailContainer() {
   }
   return (
     <Flex gap={{ base: '0.5rem', xl: '2.5rem' }} flexDir='column' w='100%' pos='relative'>
-      <CreatorHeader creator={data.creator} />
-      <ParticipationList />
+      <CreatorHeader creator={data.creator} artList={data.art} />
+      <ParticipationList artList={data.art} />
     </Flex>
   );
 }

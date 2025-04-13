@@ -1,9 +1,10 @@
 'use client';
 
+import { IArtPreivew } from '@/model/art';
 import { ICreator } from '@/model/artist';
 import { Image, Box, Center, Divider, Flex, Tag, Text, useMediaQuery } from '@chakra-ui/react';
 
-function CreatorHeader({ creator }: { creator: ICreator }) {
+function CreatorHeader({ creator, artList }: { creator: ICreator; artList: IArtPreivew[] }) {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   return (
     <Center py={{ base: '30px', xl: '2.5rem' }} bg='gray.700' w='100%' px={{ base: '1.25rem', xl: 0 }}>
@@ -33,7 +34,11 @@ function CreatorHeader({ creator }: { creator: ICreator }) {
               pos='relative'
             >
               <Image
-                src={creator?.creatorThumbmail || '/assets/image/creator/no-profile.png'}
+                src={
+                  creator.creatorThumbmail
+                    ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${creator.creatorThumbmail}`
+                    : '/assets/image/creator/no-profile.png'
+                }
                 alt='creator profile thumbnail'
                 w='100%'
                 height='100%'
@@ -79,7 +84,7 @@ function CreatorHeader({ creator }: { creator: ICreator }) {
                   판매중
                 </Text>
                 <Text color='white' fontWeight={700} fontSize='1.5rem' lineHeight='29px'>
-                  10
+                  {artList.filter(art => art.isAuctionActive).length}
                   <Text as='span' fontSize='1.125rem'>
                     점
                   </Text>
@@ -91,7 +96,7 @@ function CreatorHeader({ creator }: { creator: ICreator }) {
                   판매종료
                 </Text>
                 <Text color='white' fontWeight={700} fontSize='1.5rem' lineHeight='29px'>
-                  0
+                  {artList.filter(art => !art.isAuctionActive).length}
                   <Text as='span' fontSize='1.125rem'>
                     점
                   </Text>

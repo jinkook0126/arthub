@@ -1,3 +1,5 @@
+import { IArtPreivew } from './art';
+
 export interface ICreatorRequestBody {
   creatorName: string;
   creatorDesc: string;
@@ -26,4 +28,5 @@ export interface ICreatorDetailResponse {
   success: boolean;
   msg: string;
   creator: ICreator;
+  art: IArtPreivew[];
 }
