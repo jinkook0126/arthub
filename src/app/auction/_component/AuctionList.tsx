@@ -2,16 +2,38 @@
 
 import { Box, Flex, Text, Grid } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import OrderButtonList from './OrderButtonList';
+import { useMemo, useState } from 'react';
+import OrderButtonList, { type OrderOption } from './OrderButtonList';
 import AuctionItem from './AuctionItem';
 import getAuctionList from '../_lib/getAuctionList';
 
 function AuctionList() {
   const { data } = useQuery({ queryKey: ['auction'], queryFn: getAuctionList });
+  const [order, setOrder] = useState<OrderOption>('최신순');
+  const safeData = data?.art ?? [];
+  const sortedList = useMemo(
+    () =>
+      [...safeData].sort((a, b) => {
+        switch (order) {
+          case '최신순':
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          case '응찰순':
+            return b.bidCount - a.bidCount;
+          case '높은 가격 순':
+            return b.currentPrice - a.currentPrice;
+          case '낮은 가격 순':
+            return a.currentPrice - b.currentPrice;
+          default:
+            return 0;
+        }
+      }),
+    [data, order],
+  );
 
   if (!data) {
     return null;
   }
+
   return (
     <Box as='section'>
       <Flex justify='space-between' align='center'>
@@ -21,7 +43,7 @@ function AuctionList() {
           </Text>
           개 작품
         </Text>
-        <OrderButtonList />
+        <OrderButtonList onChangeOrder={setOrder} />
       </Flex>
       <Grid
         templateColumns={{
@@ -34,7 +56,7 @@ function AuctionList() {
         mt='24px'
         mb='120px'
       >
-        {data.art.map(item => (
+        {sortedList.map(item => (
           <AuctionItem art={item} key={`art-${item.id}`} />
         ))}
       </Grid>

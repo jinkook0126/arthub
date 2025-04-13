@@ -2,18 +2,27 @@
 
 import { Flex, Box, Text, Popover, PopoverBody, PopoverContent, PopoverTrigger, useDisclosure } from '@chakra-ui/react';
 import { UpDownIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import OrderButton from './OrderButton';
 
-const ORDER_OPTIONS = ['최신순', '응찰순', '높은 가격 순', '낮은 가격 순'];
-
-function OrderButtonList() {
+// const ORDER_OPTIONS = ['최신순', '응찰순', '높은 가격 순', '낮은 가격 순'];
+const ORDER_OPTIONS = ['최신순', '응찰순', '높은 가격 순', '낮은 가격 순'] as const;
+export type OrderOption = (typeof ORDER_OPTIONS)[number];
+type TOrderBtnProps = {
+  onChangeOrder: (order: OrderOption) => void;
+};
+function OrderButtonList({ onChangeOrder }: TOrderBtnProps) {
   const { isOpen, onClose, onToggle } = useDisclosure();
-  const [order, setOrder] = useState(ORDER_OPTIONS[0]);
-  const onButtonClick = (by: string) => {
+  const [order, setOrder] = useState<OrderOption>(ORDER_OPTIONS[0]);
+  const onButtonClick = (by: OrderOption) => {
     setOrder(by);
     onClose();
   };
+
+  useEffect(() => {
+    onChangeOrder(order);
+  }, [order]);
+
   return (
     <Popover isOpen={isOpen} onClose={onClose}>
       <PopoverTrigger>
