@@ -1,4 +1,4 @@
-import { IArtPreivew } from './art';
+import type { IArtPreivew } from './art';
 
 export interface ICreatorRequestBody {
   creatorName: string;

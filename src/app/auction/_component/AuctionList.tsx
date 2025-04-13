@@ -1,14 +1,23 @@
+'use client';
+
 import { Box, Flex, Text, Grid } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
 import OrderButtonList from './OrderButtonList';
 import AuctionItem from './AuctionItem';
+import getAuctionList from '../_lib/getAuctionList';
 
 function AuctionList() {
+  const { data } = useQuery({ queryKey: ['auction'], queryFn: getAuctionList });
+
+  if (!data) {
+    return null;
+  }
   return (
     <Box as='section'>
       <Flex justify='space-between' align='center'>
         <Text fontSize='0.875rem' color='gray.400'>
           <Text as='strong' color='black'>
-            99
+            {data.art.length}
           </Text>
           개 작품
         </Text>
@@ -25,12 +34,9 @@ function AuctionList() {
         mt='24px'
         mb='120px'
       >
-        <AuctionItem uri='assets/image/sample/art1.jpg' />
-        <AuctionItem uri='assets/image/sample/art2.jpg' />
-        <AuctionItem uri='assets/image/sample/art3.jpg' />
-        <AuctionItem uri='assets/image/sample/art2.jpg' />
-        <AuctionItem uri='assets/image/sample/art1.jpg' />
-        <AuctionItem uri='assets/image/sample/art3.jpg' />
+        {data.art.map(item => (
+          <AuctionItem art={item} key={`art-${item.id}`} />
+        ))}
       </Grid>
     </Box>
   );

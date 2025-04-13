@@ -41,5 +41,7 @@ model Art {
   createdAt       DateTime  @default(now()) @db.Timestamptz(6)
   sellerId        BigInt?
   winnerId        BigInt?
+  artTitle        String?
+  auctionEndAt    DateTime? @db.Timestamp(6)
   Creators        Creators? @relation(fields: [sellerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
