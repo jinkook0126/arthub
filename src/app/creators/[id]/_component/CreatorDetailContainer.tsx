@@ -10,9 +10,12 @@ import getCreatorDetail from '../_lib/getCreatorDetail';
 function CreatorDetailContainer() {
   const { id } = useParams();
   const { data } = useQuery({ queryKey: ['creators', id], queryFn: getCreatorDetail });
+  if (!data) {
+    return null;
+  }
   return (
     <Flex gap={{ base: '0.5rem', xl: '2.5rem' }} flexDir='column' w='100%' pos='relative'>
-      <CreatorHeader creator={data?.creator} />
+      <CreatorHeader creator={data.creator} />
       <ParticipationList />
     </Flex>
   );

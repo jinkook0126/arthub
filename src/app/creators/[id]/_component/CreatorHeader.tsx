@@ -3,7 +3,7 @@
 import { ICreator } from '@/model/artist';
 import { Image, Box, Center, Divider, Flex, Tag, Text, useMediaQuery } from '@chakra-ui/react';
 
-function CreatorHeader({ creator }: { creator: ICreator | undefined }) {
+function CreatorHeader({ creator }: { creator: ICreator }) {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   return (
     <Center py={{ base: '30px', xl: '2.5rem' }} bg='gray.700' w='100%' px={{ base: '1.25rem', xl: 0 }}>
@@ -14,15 +14,11 @@ function CreatorHeader({ creator }: { creator: ICreator | undefined }) {
               {creator?.creatorName}
             </Text>
             <Flex align='center' gap='0.625rem'>
-              <Tag bg='gray.500' color='white' size='lg'>
-                #원화
-              </Tag>
-              <Tag bg='gray.500' color='white' size='lg'>
-                #원화
-              </Tag>
-              <Tag bg='gray.500' color='white' size='lg'>
-                #원화
-              </Tag>
+              {creator.creatorTags.map(tag => (
+                <Tag bg='gray.500' color='white' size='lg' key={`${creator.id}-${tag}`}>
+                  #{tag}
+                </Tag>
+              ))}
             </Flex>
           </Flex>
         )}
@@ -37,7 +33,8 @@ function CreatorHeader({ creator }: { creator: ICreator | undefined }) {
               pos='relative'
             >
               <Image
-                src='/assets/image/sample/artist4.jpeg'
+                src={creator?.creatorThumbmail || '/assets/image/creator/no-profile.png'}
+                alt='creator profile thumbnail'
                 w='100%'
                 height='100%'
                 objectFit='cover'
@@ -49,18 +46,14 @@ function CreatorHeader({ creator }: { creator: ICreator | undefined }) {
             {!isLargerThan992 && (
               <Flex gap='.5rem' align='center' flexDir='column'>
                 <Text as='h1' maxW='364px' lineHeight='32px' fontSize='1.25rem' fontWeight={700} color='white' w='100%'>
-                  이진국
+                  {creator.creatorName}
                 </Text>
-                <Flex align='center' gap='0.25rem' flexDir='column'>
-                  <Tag bg='gray.500' color='white' size='md'>
-                    #원화
-                  </Tag>
-                  <Tag bg='gray.500' color='white' size='md'>
-                    #원화
-                  </Tag>
-                  <Tag bg='gray.500' color='white' size='md'>
-                    #원화
-                  </Tag>
+                <Flex align='flex-start' gap='0.25rem' flexDir='column'>
+                  {creator.creatorTags.map(tag => (
+                    <Tag bg='gray.500' color='white' size='md' key={`${creator.id}-${tag}`}>
+                      #{tag}
+                    </Tag>
+                  ))}
                 </Flex>
               </Flex>
             )}
@@ -69,10 +62,7 @@ function CreatorHeader({ creator }: { creator: ICreator | undefined }) {
           <Flex flexDir='column' justify='space-between' gap='1.25rem' w='100%'>
             <Box w='100%'>
               <Text color='white' wordBreak='keep-all'>
-                작가는 캔버스에 유화 물감을 붓이 아닌 손으로만 작업을 한다. 손끝에서 그려지는 물감의 모양은 작가의
-                감정을 고스란히 표현한다. 주로 구름의 형상을 띄는 작업을 하는데 이는 한순간 변하는 사람의 감정이
-                변해가는 구름의 특징과 비슷하다고 생각하기 때문이다. 작가는 작품에서 느껴지는 감정을 고스란히 독자에게
-                전달되길 바란다.
+                {creator.creatorDesc}
               </Text>
             </Box>
             <Flex
