@@ -6,28 +6,37 @@ import { useMemo, useState } from 'react';
 import OrderButtonList, { type OrderOption } from './OrderButtonList';
 import AuctionItem from './AuctionItem';
 import getAuctionList from '../_lib/getAuctionList';
+import { useAuctionState } from './AuctionContext';
 
 function AuctionList() {
   const { data } = useQuery({ queryKey: ['auction'], queryFn: getAuctionList });
+  const { saleStatus } = useAuctionState();
   const [order, setOrder] = useState<OrderOption>('최신순');
   const safeData = data?.art ?? [];
   const sortedList = useMemo(
     () =>
-      [...safeData].sort((a, b) => {
-        switch (order) {
-          case '최신순':
-            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-          case '응찰순':
-            return b.bidCount - a.bidCount;
-          case '높은 가격 순':
-            return b.currentPrice - a.currentPrice;
-          case '낮은 가격 순':
-            return a.currentPrice - b.currentPrice;
-          default:
-            return 0;
-        }
-      }),
-    [data, order],
+      [...safeData]
+        .filter(item => {
+          if (saleStatus === 'sale') {
+            return item.isAuctionActive;
+          }
+          return !item.isAuctionActive;
+        })
+        .sort((a, b) => {
+          switch (order) {
+            case '최신순':
+              return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            case '응찰순':
+              return b.bidCount - a.bidCount;
+            case '높은 가격 순':
+              return b.currentPrice - a.currentPrice;
+            case '낮은 가격 순':
+              return a.currentPrice - b.currentPrice;
+            default:
+              return 0;
+          }
+        }),
+    [data, order, saleStatus],
   );
 
   if (!data) {

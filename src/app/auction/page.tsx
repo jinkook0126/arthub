@@ -1,8 +1,6 @@
-import { Flex } from '@chakra-ui/react';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import SearchFilter from './_component/SearchFilter';
-import AuctionList from './_component/AuctionList';
 import getAuctionList from './_lib/getAuctionList';
+import ClientAuctionPage from './_component/ClientAuctionPage';
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -13,11 +11,8 @@ export default async function Home() {
   });
 
   return (
-    <Flex flexDir='column' flexGrow={1} maxW='1280px' mx='auto' w='100%' px={{ base: '16px', xl: 0 }}>
-      <SearchFilter />
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <AuctionList />
-      </HydrationBoundary>
-    </Flex>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ClientAuctionPage />
+    </HydrationBoundary>
   );
 }
