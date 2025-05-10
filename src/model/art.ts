@@ -18,6 +18,10 @@ export interface IArt {
   sellerId: number;
   winnerId: number;
   artTitle: string;
+  artDesc: string;
+  artMaterial: string;
+  artSize: string;
+  artCreatedAt: Date;
   auctionEndAt: Date;
   Creators: ICreator;
 }

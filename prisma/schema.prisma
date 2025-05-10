@@ -21,7 +21,7 @@ model Creators {
   id               BigInt    @id @default(autoincrement())
   creatorName      String    @default("")
   creatorDesc      String?   @default("")
-  creatorThumbmail String?   @default("")
+  creatorThumbnail String?   @default("")
   creatorTags      String[]
   createdAt        DateTime  @default(now()) @db.Timestamptz(6)
   updatedAt        DateTime? @db.Timestamptz(6)
@@ -43,5 +43,9 @@ model Art {
   winnerId        BigInt?
   artTitle        String?
   auctionEndAt    DateTime? @db.Timestamp(6)
+  artCreatedAt    DateTime  @db.Date
+  artSize         String
+  artMaterial     String
+  artDesc         String
   Creators        Creators? @relation(fields: [sellerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

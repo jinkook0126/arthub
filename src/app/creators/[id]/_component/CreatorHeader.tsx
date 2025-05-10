@@ -35,8 +35,8 @@ function CreatorHeader({ creator, artList }: { creator: ICreator; artList: IArtP
             >
               <Image
                 src={
-                  creator.creatorThumbmail
-                    ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${creator.creatorThumbmail}`
+                  creator.creatorThumbnail
+                    ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${creator.creatorThumbnail}`
                     : '/assets/image/creator/no-profile.png'
                 }
                 alt='creator profile thumbnail'

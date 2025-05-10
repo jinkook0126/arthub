@@ -1,10 +1,16 @@
 'use client';
 
 import { Image, Center, Box, Flex, Text, VStack, Divider, useMediaQuery } from '@chakra-ui/react';
+import { useParams } from 'next/navigation';
+import dayjs from 'dayjs';
 import ArtDetail from './_component/ArtDetail';
+import useArtDetail from './_lib/useArtDetail';
 
 function AuctionDetail() {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
+  const { idx } = useParams();
+  const { data } = useArtDetail({ id: Number(idx) });
+  if (!data) return <Box flexGrow={1}>loading...</Box>;
   return (
     <Box as='main' flexGrow={1} height='100%'>
       <Box maxW='1280px' mx='auto' mb='140px'>
@@ -27,38 +33,44 @@ function AuctionDetail() {
               height={{ base: '400px', xl: '530px' }}
             >
               <Box w='100%' height={{ base: '400px', xl: '530px' }} pos='relative'>
-                <Image pos='absolute' src='/assets/image/sample/kerokero.png' objectFit='contain' w='100%' h='100%' />
+                <Image
+                  pos='absolute'
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${data.art.url}`}
+                  objectFit='contain'
+                  w='100%'
+                  h='100%'
+                />
               </Box>
             </Center>
             <Divider my='60px' />
-            <ArtDetail />
+            <ArtDetail detail={data.art} />
           </Box>
           <Box w={{ base: '100%', xl: '28rem' }} pos='sticky' bottom={0} bg='white'>
             <Box pos='sticky' top='calc(3.625rem + 3rem)' overflowX='hidden' overflowY='scroll'>
               {isLargerThan992 && (
                 <Box>
                   <Text fontSize='28px' fontWeight={700} color='black'>
-                    이진국(이름)
+                    {data.art.Creators.creatorName}
                   </Text>
                   <Text fontSize='20px' color='gray.700' my='13px' lineHeight='1.5em'>
-                    hello(작품명)
+                    {data.art.artTitle}
                   </Text>
                   <Box mb='20px'>
-                    <Text fontSize='14px'>캔버스에 아크릴(재료)</Text>
-                    <Text fontSize='14px'>25.5×17.7cm(사이즈)</Text>
+                    <Text fontSize='14px'>{data.art.artMaterial}</Text>
+                    <Text fontSize='14px'>{data.art.artSize}</Text>
                   </Box>
                   <VStack py='20px' borderColor='gray.200' borderBottomWidth={1} borderTopWidth={1} gap='10px'>
                     <Flex w='100%' align='center' justify='space-between' fontWeight={500} fontSize='14px'>
                       <Text color='gray.600'>시작가</Text>
-                      <Text color='black'>KRW 7,000,000</Text>
+                      <Text color='black'>KRW {data.art.startingPrice.toLocaleString()}</Text>
                     </Flex>
                     <Flex w='100%' align='center' justify='space-between' fontWeight={500} fontSize='14px'>
                       <Text color='gray.600'>현재가</Text>
-                      <Text color='black'>KRW 7,000,000</Text>
+                      <Text color='black'>KRW {data.art.currentPrice.toLocaleString()}</Text>
                     </Flex>
                     <Flex w='100%' align='center' justify='space-between' fontWeight={500} fontSize='14px'>
                       <Text color='gray.600'>즉시 구매가</Text>
-                      <Text color='black'>KRW 7,000,000</Text>
+                      <Text color='black'>KRW {data.art.buyoutPrice.toLocaleString()}</Text>
                     </Flex>
                   </VStack>
                 </Box>
@@ -69,7 +81,7 @@ function AuctionDetail() {
                   <Text>
                     마감시간
                     <Text color='blue.400' as='span' pl='8px'>
-                      2025/03/04
+                      {dayjs(data.art.auctionEndAt).format('YYYY/MM/DD')}
                     </Text>
                   </Text>
                 </Center>

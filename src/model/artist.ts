@@ -9,7 +9,7 @@ export interface ICreator {
   id: number;
   creatorName: string;
   creatorDesc: string;
-  creatorThumbmail: '';
+  creatorThumbnail?: string;
   creatorTags: string[];
   createdAt: Date;
 }

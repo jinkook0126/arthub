@@ -60,7 +60,7 @@ function Header() {
                       옥션
                     </Link>
                     <Link
-                      href='/'
+                      href='/creators'
                       as={NextLink}
                       fontSize='1rem'
                       fontWeight={500}
@@ -70,7 +70,7 @@ function Header() {
                         textDecoration: 'none',
                       }}
                     >
-                      nav A
+                      작가
                     </Link>
                   </HStack>
                 </nav>
