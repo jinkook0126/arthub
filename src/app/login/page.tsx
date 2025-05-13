@@ -1,4 +1,5 @@
-import { Box, Text, Card, Flex } from '@chakra-ui/react';
+import { Box, Text, Card, Flex, Link } from '@chakra-ui/react';
+import NextLink from 'next/link';
 import LoginForm from './_component/LoginForm';
 
 function LoginPage() {
@@ -25,9 +26,11 @@ function LoginPage() {
             비밀번호 찾기
           </Text>
           <Box w='0.0625rem' h='0.75rem' mx='0.75rem' bg='gray.300' />
-          <Text color='gray.500' fontSize='0.875rem'>
-            회원가입
-          </Text>
+          <Link href='/sign-up' as={NextLink}>
+            <Text color='gray.500' fontSize='0.875rem'>
+              회원가입
+            </Text>
+          </Link>
         </Flex>
       </Card>
     </Box>
