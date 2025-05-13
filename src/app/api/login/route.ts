@@ -1,22 +1,26 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { hash } from 'bcryptjs';
+import { compare } from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const { email, password, name } = await req.json();
+  const { email, password } = await req.json();
   try {
-    const hashed = await hash(password, 10);
-    await prisma.user.create({
-      data: {
+    const user = await prisma.user.findUnique({
+      where: {
         email,
-        password: hashed,
-        name,
       },
     });
-    return NextResponse.json({ success: true });
+    if (!user) {
+      return NextResponse.json({ success: false, error: '존재하지 않는 이메일입니다.' });
+    }
+    const isValid = await compare(password, user.password);
+    if (!isValid) {
+      return NextResponse.json({ success: false, error: '비밀번호가 잘못되었습니다.' });
+    }
+    return NextResponse.json({ success: true, user });
   } catch (e) {
     if (e instanceof PrismaClientKnownRequestError) {
       const target = (e.meta as { target: string[] })?.target;

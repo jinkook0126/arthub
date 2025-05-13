@@ -79,7 +79,7 @@ function Header() {
                 <nav>
                   <HStack spacing='18px'>
                     <Link
-                      href='/'
+                      href='/login'
                       as={NextLink}
                       fontSize='0.875rem'
                       fontWeight={400}
@@ -89,7 +89,7 @@ function Header() {
                         textDecoration: 'none',
                       }}
                     >
-                      nav A
+                      로그인 / 회원가입
                     </Link>
                     <Link
                       href='/'
@@ -102,7 +102,7 @@ function Header() {
                         textDecoration: 'none',
                       }}
                     >
-                      nav A
+                      작가가입
                     </Link>
                   </HStack>
                 </nav>
