@@ -49,3 +49,12 @@ model Art {
   artDesc         String
   Creators        Creators? @relation(fields: [sellerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
