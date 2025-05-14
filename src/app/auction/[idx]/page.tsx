@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import dayjs from 'dayjs';
 import ArtDetail from './_component/ArtDetail';
 import useArtDetail from './_lib/useArtDetail';
+import ArtBidButtonContainer from './_component/ArtBidButtonContainer';
 
 function AuctionDetail() {
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
@@ -85,30 +86,7 @@ function AuctionDetail() {
                     </Text>
                   </Text>
                 </Center>
-                <Flex gap='12px'>
-                  <Center
-                    as='button'
-                    h='56px'
-                    flex={1}
-                    bg='blue.300'
-                    _hover={{ bg: 'blue.400' }}
-                    borderRadius='3px'
-                    color='white'
-                  >
-                    <Text>응찰하기</Text>
-                  </Center>
-                  <Center
-                    as='button'
-                    h='56px'
-                    flex={1}
-                    bg='green.300'
-                    _hover={{ bg: 'green.400' }}
-                    borderRadius='3px'
-                    color='white'
-                  >
-                    <Text>즉시 구매하기</Text>
-                  </Center>
-                </Flex>
+                <ArtBidButtonContainer />
               </Box>
             </Box>
           </Box>
