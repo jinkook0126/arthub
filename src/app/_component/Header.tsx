@@ -1,13 +1,17 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
 import { Box, Flex, Img, HStack, Link, useMediaQuery, IconButton, useDisclosure } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import MobileMenu from './MobileMenu';
+import LoginNav from './LoginNav';
+import MyPagePopover from './MyPagePopover';
 
 function Header() {
+  const { status } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   const pathName = usePathname();
@@ -57,7 +61,7 @@ function Header() {
                         textDecoration: 'none',
                       }}
                     >
-                      옥션
+                      경매참여
                     </Link>
                     <Link
                       href='/creators'
@@ -70,43 +74,12 @@ function Header() {
                         textDecoration: 'none',
                       }}
                     >
-                      작가
+                      작가찾기
                     </Link>
                   </HStack>
                 </nav>
               </Flex>
-              <Box>
-                <nav>
-                  <HStack spacing='18px'>
-                    <Link
-                      href='/login'
-                      as={NextLink}
-                      fontSize='0.875rem'
-                      fontWeight={400}
-                      color='gray.800'
-                      textDecoration='none'
-                      _hover={{
-                        textDecoration: 'none',
-                      }}
-                    >
-                      로그인 / 회원가입
-                    </Link>
-                    <Link
-                      href='/'
-                      as={NextLink}
-                      fontSize='0.875rem'
-                      fontWeight={400}
-                      color='gray.800'
-                      textDecoration='none'
-                      _hover={{
-                        textDecoration: 'none',
-                      }}
-                    >
-                      작가가입
-                    </Link>
-                  </HStack>
-                </nav>
-              </Box>
+              <Box>{status === 'authenticated' ? <MyPagePopover /> : <LoginNav />}</Box>
             </Flex>
           ) : (
             <Flex as='section' w='100%' align='center'>

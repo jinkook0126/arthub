@@ -1,3 +1,5 @@
+'use client';
+
 import NextLink from 'next/link';
 import {
   Drawer,
@@ -5,19 +7,21 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Text,
   Box,
   Divider,
   VStack,
   Link,
 } from '@chakra-ui/react';
-import { ChevronRightIcon } from '@chakra-ui/icons';
+import { useSession } from 'next-auth/react';
+import MobileLoginNav from './MobileLoginNav';
+import MobileLoginMypage from './MobileLoginMypage';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
 };
 function MobileMenu({ isOpen, onClose }: Props) {
+  const { status } = useSession();
   return (
     <Drawer isOpen={isOpen} placement='left' onClose={onClose} size='lg'>
       <DrawerOverlay />
@@ -25,39 +29,25 @@ function MobileMenu({ isOpen, onClose }: Props) {
         <DrawerCloseButton size='lg' />
         <DrawerBody>
           <Box mt={16}>
-            <Box>
-              <Text fontWeight={500}>로그인 해주세요</Text>
-              <Link
-                href='/'
-                as={NextLink}
-                fontWeight={400}
-                fontSize='0.875rem'
-                color='gray.500'
-                mt={1}
-                _hover={{
-                  textDecoration: 'none',
-                }}
-              >
-                로그인
-                <ChevronRightIcon w={4} h={4} ml={1} />
-              </Link>
-            </Box>
+            {status === 'authenticated' ? <MobileLoginMypage /> : <MobileLoginNav />}
             <Divider my={6} />
-            <VStack spacing={6} align='flex-start'>
-              <Link
-                href='/'
-                as={NextLink}
-                fontSize='1rem'
-                fontWeight={500}
-                color='gray.800'
-                _hover={{
-                  textDecoration: 'none',
-                }}
-              >
-                회원가입
-              </Link>
-            </VStack>
-            <Divider my={6} />
+            {status === 'authenticated' && (
+              <Box>
+                <Link
+                  href='/'
+                  as={NextLink}
+                  fontSize='1rem'
+                  fontWeight={500}
+                  color='gray.800'
+                  _hover={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  마이페이지
+                </Link>
+                <Divider my={6} />
+              </Box>
+            )}
             <VStack spacing={6} align='flex-start'>
               <Link
                 href='/'
@@ -81,7 +71,7 @@ function MobileMenu({ isOpen, onClose }: Props) {
                   textDecoration: 'none',
                 }}
               >
-                의뢰하기
+                작가찾기
               </Link>
             </VStack>
           </Box>

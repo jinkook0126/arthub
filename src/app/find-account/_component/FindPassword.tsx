@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Text, Card, Flex, Input, Button } from '@chakra-ui/react';
 
 function FindPassword() {
