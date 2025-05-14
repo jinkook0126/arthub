@@ -5,23 +5,19 @@ import { signIn } from 'next-auth/react';
 import { Text, Input, Box, Button, Flex, useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema } from '@/schemas/loginSchema';
+import { loginSchema, LoginFormValues } from '@/schemas/loginSchema';
 
-type LoginFormProps = {
-  email: string;
-  password: string;
-};
 function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormProps>({
+  } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
   const toast = useToast();
   const router = useRouter();
-  const onLogin = async (data: LoginFormProps) => {
+  const onLogin = async (data: LoginFormValues) => {
     const { email, password } = data;
     const res = await signIn('credentials', {
       email,
