@@ -1,22 +1,26 @@
-import { Box, Card, Text } from '@chakra-ui/react';
+import { Box, Divider, Text } from '@chakra-ui/react';
+import { auth } from '@/auth';
 import MyPageList from './_component/MyPageList';
 
-const page = () => (
-  <Box pb='5rem' pt={{ base: '5rem', xl: '2.5rem' }} bg={{ base: 'gray.100', xl: 'white' }} flexGrow={1}>
-    <Text
-      as='h2'
-      mb='2.5rem'
-      fontSize={{ base: '2.125rem', xl: '1.75rem' }}
-      fontWeight={500}
-      textAlign={{ base: 'center', xl: 'left' }}
-      pl={{ base: 0, xl: '1rem' }}
-    >
-      마이페이지
-    </Text>
-    <Card maxW='26.5rem' p={{ base: '2.5rem', xl: 0 }} mx='auto' boxShadow={{ base: undefined, xl: 'none' }}>
+const page = async () => {
+  const session = await auth();
+  return (
+    <Box as='main' pb='5rem' pt={{ base: '5rem', xl: '2.5rem' }} px='16px' bg='white' flexGrow={1} w='630px' mx='auto'>
+      <Box pb='16px'>
+        <Text fontSize='20px' color='gray.500'>
+          <Text as='span' fontSize='34px' fontWeight={500} color='black' mr='8px'>
+            {session?.user?.name}
+          </Text>
+          고객님
+        </Text>
+        <Text fontSize='1rem' mt='6px' color='gray.500'>
+          {session?.user?.email}
+        </Text>
+      </Box>
+      <Divider />
       <MyPageList />
-    </Card>
-  </Box>
-);
+    </Box>
+  );
+};
 
 export default page;

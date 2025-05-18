@@ -32,7 +32,7 @@ function MyPagePopover() {
           </Text>
           <Box as='nav' p='16px 0px 20px' mb='20px'>
             <VStack gap={0}>
-              <Box w='100%' as={NextLink} href='/mypage/order' py='11px'>
+              <Box w='100%' as={NextLink} href='/mypage' py='11px'>
                 <Text fontSize='1rem'>마이페이지</Text>
               </Box>
               <Box w='100%' as={NextLink} href='/mypage/order' py='11px'>

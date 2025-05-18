@@ -34,7 +34,7 @@ function MobileMenu({ isOpen, onClose }: Props) {
             {status === 'authenticated' && (
               <Box>
                 <Link
-                  href='/'
+                  href='/mypage'
                   as={NextLink}
                   fontSize='1rem'
                   fontWeight={500}
