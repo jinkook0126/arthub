@@ -48,7 +48,9 @@ function Header() {
           {isLargerThan992 ? (
             <Flex as='section' align='center' h='100%' w='100%' justify='space-between'>
               <Flex align='center'>
-                <Img src='/assets/logo.png' w={120} mr={30} />
+                <Box as={NextLink} href='/'>
+                  <Img src='/assets/logo.png' w={120} mr={30} />
+                </Box>
                 <nav>
                   <HStack spacing='18px'>
                     <Link
@@ -96,8 +98,9 @@ function Header() {
                   }}
                   icon={<HamburgerIcon w={6} h={6} color='gray.800' />}
                 />
-
-                <Img src='/assets/logo.png' w={120} />
+                <Box as={NextLink} href='/'>
+                  <Img src='/assets/logo.png' w={120} />
+                </Box>
               </Flex>
             </Flex>
           )}
