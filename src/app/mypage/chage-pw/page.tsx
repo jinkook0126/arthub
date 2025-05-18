@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import ChangePasswordForm from './_componet/ChangePasswordForm';
+import ChangePasswordForm from './_component/ChangePasswordForm';
 
 const page = () => (
   <Box as='main' pb='5rem' pt={{ base: '5rem', xl: '2.5rem' }} px='16px' bg='white' flexGrow={1} w='630px' mx='auto'>

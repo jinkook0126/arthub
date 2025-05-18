@@ -25,7 +25,7 @@ function MyPageList() {
             설정
           </Text>
         </Box>
-        <Flex justify='space-between' align='center' py='16px' as={NextLink} href='/chage-pw'>
+        <Flex justify='space-between' align='center' py='16px' as={NextLink} href='/mypage/chage-pw'>
           <Text fontWeight='500'>비밀번호 변경</Text>
           <ChevronRightIcon w='24px' height='24px' color='gray.500' />
         </Flex>
