@@ -1,8 +1,10 @@
 import { IBidHistoryResponse } from '@/model/art';
+import { auth } from '@/auth';
 
 const getAuctionList = async () => {
+  const session = await auth();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/auction-history`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/auction-history?userId=${session?.user.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

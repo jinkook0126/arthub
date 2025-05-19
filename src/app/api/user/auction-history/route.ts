@@ -1,18 +1,19 @@
-import { auth } from '@/auth';
 import { PrismaClient } from '@prisma/client';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export async function GET() {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.json({ sucess: false, msg: '로그인 후 이용해주세요.' });
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get('userId');
+  if (!userId) {
+    return NextResponse.json({ sucess: false, msg: 'userId가 없습니다.' });
   }
+
   try {
     const res = await prisma.bidHistory.findMany({
       where: {
-        userId: session.user?.id,
+        userId,
       },
       include: {
         Art: {
@@ -31,11 +32,10 @@ export async function GET() {
     });
     return NextResponse.json({
       sucess: true,
-      lists: res.map(item => ({
+      list: res.map(item => ({
         ...item,
         id: Number(item.id),
         artId: Number(item.artId),
-        userId: Number(item.userId),
       })),
     });
   } catch (error) {

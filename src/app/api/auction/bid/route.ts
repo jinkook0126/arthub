@@ -20,6 +20,14 @@ export async function POST(request: NextRequest) {
   if (price <= currentPrice) {
     return NextResponse.json({ success: false, error: '응찰가가 현재가보다 낮습니다.' });
   }
+  await prisma.bidHistory.create({
+    data: {
+      artId: auctionIdx,
+      userId: session.user.id,
+      bidAmount: price,
+      currAmount: currentPrice,
+    },
+  });
   await prisma.art.update({
     where: { id: auctionIdx },
     data: { currentPrice: price, bidCount: { increment: 1 } },

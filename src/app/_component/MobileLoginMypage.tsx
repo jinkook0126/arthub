@@ -1,14 +1,12 @@
 import { Box, Flex, Text, Center } from '@chakra-ui/react';
 import { signOut, useSession } from 'next-auth/react';
 import NextLink from 'next/link';
-import { useRouter } from 'next/navigation';
 
-function MobileLoginMypage() {
+function MobileLoginMypage({ onClose }: { onClose: () => void }) {
   const { data: session } = useSession();
-  const router = useRouter();
   const onSignOut = () => {
-    signOut();
-    router.push('/');
+    onClose();
+    signOut({ callbackUrl: '/' });
   };
   return (
     <Box>

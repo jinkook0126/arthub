@@ -29,7 +29,11 @@ function MobileMenu({ isOpen, onClose }: Props) {
         <DrawerCloseButton size='lg' />
         <DrawerBody>
           <Box mt={16}>
-            {status === 'authenticated' ? <MobileLoginMypage /> : <MobileLoginNav />}
+            {status === 'authenticated' ? (
+              <MobileLoginMypage onClose={onClose} />
+            ) : (
+              <MobileLoginNav onClose={onClose} />
+            )}
             <Divider my={6} />
             {status === 'authenticated' && (
               <Box>
@@ -42,6 +46,7 @@ function MobileMenu({ isOpen, onClose }: Props) {
                   _hover={{
                     textDecoration: 'none',
                   }}
+                  onClick={onClose}
                 >
                   마이페이지
                 </Link>
@@ -50,7 +55,7 @@ function MobileMenu({ isOpen, onClose }: Props) {
             )}
             <VStack spacing={6} align='flex-start'>
               <Link
-                href='/'
+                href='/auction'
                 as={NextLink}
                 fontSize='1rem'
                 fontWeight={500}
@@ -58,11 +63,12 @@ function MobileMenu({ isOpen, onClose }: Props) {
                 _hover={{
                   textDecoration: 'none',
                 }}
+                onClick={onClose}
               >
                 경매참여
               </Link>
               <Link
-                href='/'
+                href='/creators'
                 as={NextLink}
                 fontSize='1rem'
                 fontWeight={500}
@@ -70,6 +76,7 @@ function MobileMenu({ isOpen, onClose }: Props) {
                 _hover={{
                   textDecoration: 'none',
                 }}
+                onClick={onClose}
               >
                 작가찾기
               </Link>

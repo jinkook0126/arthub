@@ -4,12 +4,12 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Divider, Link, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
-export default function MobileLoginNav() {
+export default function MobileLoginNav({ onClose }: { onClose: () => void }) {
   return (
     <Box>
       <Text fontWeight={500}>로그인 해주세요</Text>
       <Link
-        href='/'
+        href='/login'
         as={NextLink}
         fontWeight={400}
         fontSize='0.875rem'
@@ -18,6 +18,7 @@ export default function MobileLoginNav() {
         _hover={{
           textDecoration: 'none',
         }}
+        onClick={onClose}
       >
         로그인
         <ChevronRightIcon w={4} h={4} ml={1} />

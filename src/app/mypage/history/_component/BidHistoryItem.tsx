@@ -43,17 +43,8 @@ function BidHistoryItem({ art }: { art: IBidHistoryItem }) {
           />
         </Box>
         {isWinner && (
-          <Box
-            position='absolute'
-            top='0'
-            right='0'
-            bg='red.400'
-            color='white'
-            px='10px'
-            py='5px'
-            borderRadius='0.5rem'
-          >
-            당첨자
+          <Box position='absolute' top='10px' right='0'>
+            <Image src='/assets/image/winner.png' w='50px' objectFit='contain' />
           </Box>
         )}
       </Flex>
