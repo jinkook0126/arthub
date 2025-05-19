@@ -20,7 +20,7 @@ export default {
             },
           });
           const data = await res.json();
-          if (data.success) return data.user;
+          if (data.success) return { ...data.user, role: 'user' };
           return null;
         } catch (e) {
           return null;
@@ -28,4 +28,15 @@ export default {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return { ...token, ...user };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      return { ...session, user: { ...session.user, role: token.role as string, id: token.id as string } };
+    },
+  },
 } satisfies NextAuthConfig;

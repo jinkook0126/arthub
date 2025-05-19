@@ -31,30 +31,44 @@ model Creators {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Art {
-  id              BigInt    @id @default(autoincrement())
+  id              BigInt       @id @default(autoincrement())
   url             String
   startingPrice   Int
   currentPrice    Int
   buyoutPrice     Int
-  bidCount        Int?      @default(0) @db.SmallInt
-  isAuctionActive Boolean?  @default(false)
-  createdAt       DateTime  @default(now()) @db.Timestamptz(6)
+  bidCount        Int?         @default(0) @db.SmallInt
+  isAuctionActive Boolean?     @default(false)
+  createdAt       DateTime     @default(now()) @db.Timestamptz(6)
   sellerId        BigInt?
   winnerId        String?
   artTitle        String?
-  auctionEndAt    DateTime? @db.Timestamp(6)
-  artCreatedAt    DateTime  @db.Date
+  auctionEndAt    DateTime?    @db.Timestamp(6)
+  artCreatedAt    DateTime     @db.Date
   artSize         String
   artMaterial     String
   artDesc         String
-  Creators        Creators? @relation(fields: [sellerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Creators        Creators?    @relation(fields: [sellerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  BidHistory      BidHistory[]
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String       @id @default(cuid())
+  email      String       @unique
+  password   String
+  name       String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  BidHistory BidHistory[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model BidHistory {
+  id         BigInt   @id @default(autoincrement())
+  artId      BigInt
+  userId     String
+  currAmount Int
+  bidAmount  Int
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+  Art        Art      @relation(fields: [artId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  User       User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

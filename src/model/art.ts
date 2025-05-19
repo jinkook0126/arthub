@@ -16,7 +16,7 @@ export interface IArt {
   isAuctionActive: boolean;
   createdAt: Date;
   sellerId: number;
-  winnerId: number;
+  winnerId: string;
   artTitle: string;
   artDesc: string;
   artMaterial: string;
@@ -26,8 +26,27 @@ export interface IArt {
   Creators: ICreator;
 }
 
+export interface IBidHistoryItem {
+  id: number;
+  userId: string;
+  artId: number;
+  bidAmount: number;
+  Art: {
+    url: string;
+    winnerId: string;
+    isAuctionActive: boolean;
+    currentPrice: number;
+  };
+}
+
 export interface IArtResponse {
   success: boolean;
   msg: string;
   art: IArt[];
+}
+
+export interface IBidHistoryResponse {
+  success: boolean;
+  msg: string;
+  list: IBidHistoryItem[];
 }

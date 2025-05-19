@@ -13,8 +13,8 @@ function MyPageList() {
             경매
           </Text>
         </Box>
-        <Flex justify='space-between' align='center' py='16px' as={NextLink} href='/mypage/auction'>
-          <Text fontWeight='500'>내가 참여한 작품</Text>
+        <Flex justify='space-between' align='center' py='16px' as={NextLink} href='/mypage/history'>
+          <Text fontWeight='500'>내가 응찰한 작품</Text>
           <ChevronRightIcon w='24px' height='24px' color='gray.500' />
         </Flex>
       </Box>
