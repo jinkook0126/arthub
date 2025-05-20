@@ -39,7 +39,7 @@ function MobileLoginMypage({ onClose }: { onClose: () => void }) {
           borderRadius='8px'
           p='10px 0px'
           as={NextLink}
-          href='/mypage/order'
+          href='/change-creator'
         >
           <Text fontSize='14px' fontWeight={500} color='gray.500'>
             작가전환

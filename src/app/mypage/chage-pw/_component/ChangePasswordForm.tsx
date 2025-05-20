@@ -89,7 +89,7 @@ function ChangePasswordForm() {
         </Box>
       </Flex>
       <Center mt='40px' gap='20px' mx='auto'>
-        <Center as={Button} px='20px' h='40px' borderRadius='3px' type='button' onClick={() => router.back()} w=''>
+        <Center as={Button} px='20px' h='40px' borderRadius='3px' type='button' onClick={() => router.back()}>
           <Text>취소</Text>
         </Center>
         <Center
