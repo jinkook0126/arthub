@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         creatorId: creator.id,
       },
     });
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, creatorId: Number(creator.id) });
   } catch (e) {
     return NextResponse.json({ success: false, error: 'Unknown error' });
   }

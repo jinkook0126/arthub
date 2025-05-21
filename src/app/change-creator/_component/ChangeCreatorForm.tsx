@@ -42,7 +42,11 @@ function ChangeCreatorForm() {
     clearErrors,
     formState: { errors },
   } = useForm<ChangeRoleFormValues>({ resolver: zodResolver(changeRoleSchema) });
-  const { mutate: changeCreator, isPending } = useMutation<IBaseResponse, Error, ChangeRoleFormValues>({
+  const { mutate: changeCreator, isPending } = useMutation<
+    IBaseResponse & { creatorId: number },
+    Error,
+    ChangeRoleFormValues
+  >({
     mutationFn: async (formData: ChangeRoleFormValues) => {
       const res = await fetch('/api/user/change-role', {
         method: 'POST',
@@ -57,8 +61,7 @@ function ChangeCreatorForm() {
         status: res.success ? 'success' : 'error',
       });
       if (res.success) {
-        await update({ user: { role: 'creator' } });
-
+        await update({ user: { role: 'creator', creatorId: res.creatorId } });
         router.back();
       }
     },

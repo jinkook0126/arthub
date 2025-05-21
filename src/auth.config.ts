@@ -34,12 +34,20 @@ export default {
         return { ...token, ...user };
       }
       if (trigger === 'update') {
-        return { ...token, role: session.user.role };
+        return { ...token, role: session.user.role, creatorId: session.user.creatorId };
       }
       return token;
     },
     async session({ session, token }) {
-      return { ...session, user: { ...session.user, role: token.role as string, id: token.id as string } };
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          role: token.role as string,
+          id: token.id as string,
+          creatorId: token.creatorId as number,
+        },
+      };
     },
   },
 } satisfies NextAuthConfig;

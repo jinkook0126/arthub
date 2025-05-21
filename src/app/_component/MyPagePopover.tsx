@@ -36,7 +36,7 @@ function MyPagePopover() {
               <Box
                 w='100%'
                 as={NextLink}
-                href={session?.user?.role === 'creator' ? '/my-creator-page' : '/change-creator'}
+                href={session?.user?.role === 'creator' ? '/mypage/creator' : '/change-creator'}
                 py='11px'
                 onClick={onClose}
               >

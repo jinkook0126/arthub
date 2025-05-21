@@ -40,7 +40,7 @@ function MobileLoginMypage({ onClose }: { onClose: () => void }) {
           p='10px 0px'
           as={NextLink}
           onClick={onClose}
-          href={session?.user?.role === 'creator' ? '/my-creator-page' : '/change-creator'}
+          href={session?.user?.role === 'creator' ? '/mypage/creator' : '/change-creator'}
         >
           <Text fontSize='14px' fontWeight={500} color='gray.500'>
             {session?.user?.role === 'creator' ? '작가페이지' : '작가전환'}
