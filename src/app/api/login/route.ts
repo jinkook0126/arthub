@@ -20,7 +20,10 @@ export async function POST(req: Request) {
     if (!isValid) {
       return NextResponse.json({ success: false, error: '비밀번호가 잘못되었습니다.' });
     }
-    return NextResponse.json({ success: true, user });
+    return NextResponse.json({
+      success: true,
+      user: { ...user, creatorId: Number(user.creatorId), role: user.creatorId ? 'creator' : 'user' },
+    });
   } catch (e) {
     if (e instanceof PrismaClientKnownRequestError) {
       const target = (e.meta as { target: string[] })?.target;

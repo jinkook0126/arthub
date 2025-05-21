@@ -20,7 +20,7 @@ export default {
             },
           });
           const data = await res.json();
-          if (data.success) return { ...data.user, role: 'user' };
+          if (data.success) return data.user;
           return null;
         } catch (e) {
           return null;
@@ -29,9 +29,12 @@ export default {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         return { ...token, ...user };
+      }
+      if (trigger === 'update') {
+        return { ...token, role: session.user.role };
       }
       return token;
     },

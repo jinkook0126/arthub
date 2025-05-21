@@ -9,7 +9,6 @@ function MyPagePopover() {
   const { onOpen, onClose, isOpen } = useDisclosure();
 
   const { data: session } = useSession();
-
   const onLogout = () => {
     signOut({ callbackUrl: '/' });
   };
@@ -34,8 +33,14 @@ function MyPagePopover() {
               <Box w='100%' as={NextLink} href='/mypage' py='11px' onClick={onClose}>
                 <Text fontSize='1rem'>마이페이지</Text>
               </Box>
-              <Box w='100%' as={NextLink} href='/change-creator' py='11px' onClick={onClose}>
-                <Text fontSize='1rem'>작가전환</Text>
+              <Box
+                w='100%'
+                as={NextLink}
+                href={session?.user?.role === 'creator' ? '/my-creator-page' : '/change-creator'}
+                py='11px'
+                onClick={onClose}
+              >
+                <Text fontSize='1rem'>{session?.user?.role === 'creator' ? '작가페이지' : '작가전환'}</Text>
               </Box>
             </VStack>
           </Box>

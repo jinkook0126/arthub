@@ -13,14 +13,21 @@ import {
   InputGroup,
   InputRightElement,
   TagCloseButton,
+  useToast,
 } from '@chakra-ui/react';
 import { ChangeEvent, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { changeRoleSchema, ChangeRoleFormValues } from '@/schemas/changeRoleSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { uploadImage } from '@/utils/supbaseActions';
+import { useMutation } from '@tanstack/react-query';
+import { IBaseResponse } from '@/model/common';
+import { useSession } from 'next-auth/react';
 
 function ChangeCreatorForm() {
+  const { update } = useSession();
+  const toast = useToast();
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
@@ -35,12 +42,50 @@ function ChangeCreatorForm() {
     clearErrors,
     formState: { errors },
   } = useForm<ChangeRoleFormValues>({ resolver: zodResolver(changeRoleSchema) });
+  const { mutate: changeCreator, isPending } = useMutation<IBaseResponse, Error, ChangeRoleFormValues>({
+    mutationFn: async (formData: ChangeRoleFormValues) => {
+      const res = await fetch('/api/user/change-role', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+      });
+      return res.json();
+    },
+    onSuccess: async res => {
+      toast({
+        title: res.success ? '작가전환 성공' : '작가전환 실패',
+        description: res.success ? '작가전환이 완료되었습니다.' : res.error,
+        status: res.success ? 'success' : 'error',
+      });
+      if (res.success) {
+        await update({ user: { role: 'creator' } });
 
-  const onChangeCreator = (data: ChangeRoleFormValues) => {
+        router.back();
+      }
+    },
+    onError: () => {
+      toast({
+        title: '작가전환 실패',
+        description: '작가전환에 실패했습니다.',
+        status: 'error',
+      });
+    },
+  });
+  const onChangeCreator = async (data: ChangeRoleFormValues) => {
+    await update({ user: { role: 'creator' } });
     if (file) {
-      // TODO: 이미지 업로드
+      const imageResult = await uploadImage({ file, directory: 'thumbnail' });
+      if (!imageResult.success) {
+        toast({
+          title: '이미지 업로드 실패',
+          description: imageResult.error,
+          status: 'error',
+        });
+        return;
+      }
+      const path = imageResult.filePath;
+      setValue('creatorThumbnail', path);
     }
-    console.warn(data);
+    changeCreator(data);
   };
   const onChangeTags = (e: ChangeEvent<HTMLInputElement>) => {
     setTagInput(e.target.value);
@@ -147,7 +192,7 @@ function ChangeCreatorForm() {
         <Button variant='outline' type='button' colorScheme='blue' onClick={() => router.back()}>
           취소
         </Button>
-        <Button type='submit' colorScheme='blue'>
+        <Button type='submit' colorScheme='blue' isLoading={isPending}>
           작가전환
         </Button>
       </Flex>

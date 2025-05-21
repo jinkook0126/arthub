@@ -39,10 +39,11 @@ function MobileLoginMypage({ onClose }: { onClose: () => void }) {
           borderRadius='8px'
           p='10px 0px'
           as={NextLink}
-          href='/change-creator'
+          onClick={onClose}
+          href={session?.user?.role === 'creator' ? '/my-creator-page' : '/change-creator'}
         >
           <Text fontSize='14px' fontWeight={500} color='gray.500'>
-            작가전환
+            {session?.user?.role === 'creator' ? '작가페이지' : '작가전환'}
           </Text>
         </Center>
       </Flex>
