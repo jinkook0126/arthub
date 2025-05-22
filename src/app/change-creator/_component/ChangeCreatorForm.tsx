@@ -48,7 +48,7 @@ function ChangeCreatorForm() {
     ChangeRoleFormValues
   >({
     mutationFn: async (formData: ChangeRoleFormValues) => {
-      const res = await fetch('/api/user/change-role', {
+      const res = await fetch('/api/user/role', {
         method: 'POST',
         body: JSON.stringify(formData),
       });

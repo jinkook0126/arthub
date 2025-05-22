@@ -43,3 +43,27 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, error: 'Unknown error' });
   }
 }
+
+export async function PUT(req: Request) {
+  const { creatorName, creatorTags, creatorThumbnail, creatorDesc } = await req.json();
+  const session = await auth();
+  if (!session?.user?.email) {
+    return NextResponse.json({ success: false, error: '로그인이 필요합니다.' });
+  }
+  try {
+    await prisma.creators.update({
+      where: {
+        id: session.user.creatorId,
+      },
+      data: {
+        creatorName,
+        creatorTags,
+        creatorThumbnail,
+        creatorDesc,
+      },
+    });
+    return NextResponse.json({ success: true });
+  } catch (e) {
+    return NextResponse.json({ success: false, error: 'Unknown error' });
+  }
+}
