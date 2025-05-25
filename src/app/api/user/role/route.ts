@@ -60,6 +60,7 @@ export async function PUT(req: Request) {
         creatorTags,
         creatorThumbnail,
         creatorDesc,
+        updatedAt: new Date(),
       },
     });
     return NextResponse.json({ success: true });

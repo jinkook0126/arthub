@@ -18,22 +18,22 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { changeRoleSchema, ChangeRoleFormValues } from '@/schemas/changeRoleSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { deleteImage, uploadImage } from '@/utils/supbaseActions';
+import { useSession } from 'next-auth/react';
 
 function MyCreatorDetail() {
+  const { data: session } = useSession();
   const [file, setFile] = useState<File | null>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [tagInput, setTagInput] = useState<string>('');
   const router = useRouter();
   const toast = useToast();
-  const { data: session } = useSession();
   const { data } = useQuery({ queryKey: ['creators', session?.user.creatorId], queryFn: getCreatorDetail });
   const {
     handleSubmit,
@@ -42,6 +42,7 @@ function MyCreatorDetail() {
     setError,
     setValue,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<ChangeRoleFormValues>({
     resolver: zodResolver(changeRoleSchema),
@@ -52,7 +53,7 @@ function MyCreatorDetail() {
       creatorDesc: '',
     },
   });
-  const { mutate: updateCreator } = useMutation({
+  const { mutate: updateCreator, isPending } = useMutation({
     mutationFn: async (v: ChangeRoleFormValues) => {
       const res = await fetch('/api/user/role', {
         method: 'PUT',
@@ -78,7 +79,7 @@ function MyCreatorDetail() {
       });
     },
   });
-  const onSubmit = async (v: ChangeRoleFormValues) => {
+  const onSubmit = async () => {
     if (file) {
       const imageResult = await uploadImage({ file, directory: 'thumbnail' });
       if (!imageResult.success) {
@@ -92,7 +93,7 @@ function MyCreatorDetail() {
       const path = imageResult.filePath;
       setValue('creatorThumbnail', path);
     }
-    updateCreator(v);
+    updateCreator(getValues());
   };
 
   const onAddTag = () => {
@@ -137,9 +138,8 @@ function MyCreatorDetail() {
     setAvatar(null);
     setFile(null);
   };
-
   useEffect(() => {
-    if (data) {
+    if (data?.creator) {
       reset({
         creatorName: data.creator.creatorName,
         creatorTags: data.creator.creatorTags ?? [],
@@ -153,7 +153,13 @@ function MyCreatorDetail() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex>
         <Flex flexDir='column' gap='10px'>
-          <Avatar size='2xl' src={avatar || ''} />
+          <Avatar
+            loading='lazy'
+            size='2xl'
+            bg='gray.200'
+            src={avatar || `${process.env.NEXT_PUBLIC_IMAGE_URL}/${watch('creatorThumbnail')}`}
+          />
+          {/* <Avatar loading='lazy' size='2xl' src={foo} /> */}
           <Button size='sm' colorScheme='blue' type='button' onClick={() => fileRef.current?.click()}>
             이미지 업로드
           </Button>
@@ -204,7 +210,7 @@ function MyCreatorDetail() {
           <Text paddingBottom='0.375rem' fontWeight={500}>
             등록한 작품
           </Text>
-          {data?.art.length === 0 ? (
+          {data?.art?.length === 0 ? (
             <Box textAlign='center' py='40px' mx='auto'>
               <Text fontWeight={500} color='gray.500' fontSize='20px'>
                 등록한 작품이 없습니다.
@@ -214,7 +220,7 @@ function MyCreatorDetail() {
               </Button>
             </Box>
           ) : (
-            <Box>{data?.art.map(art => <Box key={art.id}>{art.url}</Box>)}</Box>
+            <Box>{data?.art?.map(art => <Box key={art.id}>{art.url}</Box>)}</Box>
           )}
         </Box>
       </Flex>
@@ -222,7 +228,7 @@ function MyCreatorDetail() {
         <Button variant='outline' type='button' colorScheme='blue' onClick={() => router.back()}>
           취소
         </Button>
-        <Button type='submit' colorScheme='blue'>
+        <Button type='submit' colorScheme='blue' isLoading={isPending} loadingText='저장중...'>
           저장
         </Button>
       </Flex>
