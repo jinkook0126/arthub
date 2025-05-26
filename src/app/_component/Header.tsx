@@ -4,14 +4,14 @@ import { useSession } from 'next-auth/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
-import { Box, Flex, Img, HStack, Link, useMediaQuery, IconButton, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Img, HStack, Link, useMediaQuery, IconButton, useDisclosure, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import MobileMenu from './MobileMenu';
 import LoginNav from './LoginNav';
 import MyPagePopover from './MyPagePopover';
 
 function Header() {
-  const { status } = useSession();
+  const { status, data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   const pathName = usePathname();
@@ -81,7 +81,20 @@ function Header() {
                   </HStack>
                 </nav>
               </Flex>
-              <Box>{status === 'authenticated' ? <MyPagePopover /> : <LoginNav />}</Box>
+              <Box>
+                {status === 'authenticated' ? (
+                  <Flex align='center' gap='1rem'>
+                    {session?.user?.role === 'creator' && (
+                      <Button as={NextLink} href='/auction/register' colorScheme='blue' size='sm'>
+                        옥션등록
+                      </Button>
+                    )}
+                    <MyPagePopover />
+                  </Flex>
+                ) : (
+                  <LoginNav />
+                )}
+              </Box>
             </Flex>
           ) : (
             <Flex as='section' w='100%' align='center'>

@@ -159,7 +159,6 @@ function MyCreatorDetail() {
             bg='gray.200'
             src={avatar || `${process.env.NEXT_PUBLIC_IMAGE_URL}/${watch('creatorThumbnail')}`}
           />
-          {/* <Avatar loading='lazy' size='2xl' src={foo} /> */}
           <Button size='sm' colorScheme='blue' type='button' onClick={() => fileRef.current?.click()}>
             이미지 업로드
           </Button>

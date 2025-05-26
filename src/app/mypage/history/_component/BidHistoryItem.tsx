@@ -11,7 +11,7 @@ function BidHistoryItem({ art }: { art: IBidHistoryItem }) {
   return (
     <GridItem
       as={NextLink}
-      href={`/auction/${art.artId}`}
+      href={`/auction/detail/${art.artId}`}
       w='100%'
       minH='376px'
       display='flex'

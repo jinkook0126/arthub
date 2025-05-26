@@ -3,7 +3,7 @@
 import { createIcon } from '@chakra-ui/icons';
 
 export const UserIcon = createIcon({
-  displayName: 'GithubIcon',
+  displayName: 'UserIcon',
   viewBox: '0 0 16 16',
   path: (
     <path
