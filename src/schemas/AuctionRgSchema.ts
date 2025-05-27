@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 export const auctionRgSchema = z.object({
-  url: z.string().nonempty('사진을 업로드해주세요.'),
   artTitle: z.string().min(1, { message: '제목을 입력해주세요.' }),
   artDesc: z.string().min(1, { message: '설명을 입력해주세요.' }),
   artSize: z.string().min(1, { message: '크기를 입력해주세요.' }),

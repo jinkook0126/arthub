@@ -73,7 +73,7 @@ function ArtDetail({ detail }: { detail: IArt }) {
                 height='100%'
                 src={
                   detail.Creators.creatorThumbnail
-                    ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${detail.Creators.creatorThumbnail}`
+                    ? `${process.env.NEXT_PUBLIC_IMAGE_URL}/${detail.Creators.creatorThumbnail}`
                     : '/assets/image/creator/no-profile.png'
                 }
               />

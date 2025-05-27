@@ -9,15 +9,16 @@ import { auctionRgSchema, AuctionRgFormValues } from '@/schemas/AuctionRgSchema'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import dayjs from 'dayjs';
 import { ImageIcon } from './ImageIcon';
 
 function AuctionRegisterForm() {
   const {
     register,
     handleSubmit,
-    setValue,
     getValues,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm<AuctionRgFormValues>({
     resolver: zodResolver(auctionRgSchema),
@@ -26,9 +27,10 @@ function AuctionRegisterForm() {
   const [image, setImage] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+
   const router = useRouter();
   const { mutate: createAuction, isPending } = useMutation({
-    mutationFn: async (data: AuctionRgFormValues) => {
+    mutationFn: async (data: AuctionRgFormValues & { url: string }) => {
       const res = await fetch('/api/auction', {
         method: 'POST',
         body: JSON.stringify(data),
@@ -57,6 +59,7 @@ function AuctionRegisterForm() {
   const onChangeFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     const fileValue = e.target.files?.[0];
     if (!fileValue) return;
+    clearErrors('root');
     setImage(fileValue);
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -67,9 +70,17 @@ function AuctionRegisterForm() {
     };
     reader.readAsDataURL(fileValue);
   };
-  const onRegister = async () => {
+  const onRegister = async (values: AuctionRgFormValues) => {
+    const today = dayjs();
+    if (dayjs(values.artCreatedAt).isAfter(today, 'd')) {
+      setError('artCreatedAt', { message: '제작 날짜는 오늘 이전이여야 합니다.' });
+      return;
+    }
+    if (dayjs(values.auctionEndAt).isBefore(today)) {
+      setError('auctionEndAt', { message: '종료 날짜는 오늘 이후여야 합니다.' });
+    }
     if (!image) {
-      setError('url', { message: '사진을 업로드해주세요.' });
+      setError('root', { message: '사진을 업로드해주세요.' });
       return;
     }
     const imageResult = await uploadImage({ file: image, directory: 'art' });
@@ -81,8 +92,7 @@ function AuctionRegisterForm() {
       });
       return;
     }
-    setValue('url', imageResult.filePath);
-    createAuction(getValues());
+    createAuction({ ...getValues(), url: imageResult.filePath });
   };
   return (
     <form onSubmit={handleSubmit(onRegister)}>
@@ -121,7 +131,7 @@ function AuctionRegisterForm() {
               </Button>
             </Center>
             <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
-              {errors.url?.message}
+              {errors.root?.message}
             </Text>
           </Box>
           <Box>
@@ -170,7 +180,7 @@ function AuctionRegisterForm() {
             <Text paddingBottom='0.375rem' fontWeight={500}>
               제작년도
             </Text>
-            <Input placeholder='제작년도를 입력해주세요' {...register('artCreatedAt')} />
+            <Input placeholder='제작년도를 입력해주세요' {...register('artCreatedAt')} type='datetime-local' />
             <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
               {errors.artCreatedAt?.message}
             </Text>
@@ -214,7 +224,7 @@ function AuctionRegisterForm() {
             <Text paddingBottom='0.375rem' fontWeight={500}>
               경매 종료일
             </Text>
-            <Input placeholder='종료일을 입력해주세요' {...register('auctionEndAt')} />
+            <Input placeholder='종료일을 입력해주세요' {...register('auctionEndAt')} type='datetime-local' />
             <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
               {errors.auctionEndAt?.message}
             </Text>
@@ -229,7 +239,6 @@ function AuctionRegisterForm() {
           경매 등록
         </Button>
       </Flex>
-      <input type='hidden' {...register('url')} />
       <input type='file' hidden accept='image/*' ref={fileRef} onChange={onChangeFileInput} />
     </form>
   );

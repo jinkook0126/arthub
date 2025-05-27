@@ -43,19 +43,27 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, error: '작가 권한이 필요합니다.' });
   }
   try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: session.user.id,
+      },
+    });
+    if (!user) {
+      return NextResponse.json({ success: false, error: '작가 정보를 찾을 수 없습니다.' });
+    }
     await prisma.art.create({
       data: {
         artTitle,
         artDesc,
         artSize,
         artMaterial,
-        artCreatedAt,
+        artCreatedAt: new Date(artCreatedAt),
         url,
         startingPrice,
         buyoutPrice,
-        auctionEndAt,
+        auctionEndAt: new Date(auctionEndAt),
         currentPrice: startingPrice,
-        sellerId: Number(session.user.id),
+        sellerId: user.creatorId,
       },
     });
     return NextResponse.json({ success: true });

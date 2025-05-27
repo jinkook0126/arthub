@@ -34,7 +34,7 @@ function BidHistoryItem({ art }: { art: IBidHistoryItem }) {
       >
         <Box h={{ base: '11.875rem', sm: '15.75rem' }}>
           <Image
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${art.Art.url}`}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${art.Art.url}`}
             w='100%'
             h='100%'
             objectFit='contain'

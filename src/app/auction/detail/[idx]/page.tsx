@@ -36,7 +36,7 @@ function AuctionDetail() {
               <Box w='100%' height={{ base: '400px', xl: '530px' }} pos='relative'>
                 <Image
                   pos='absolute'
-                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${data.art.url}`}
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${data.art.url}`}
                   objectFit='contain'
                   w='100%'
                   h='100%'

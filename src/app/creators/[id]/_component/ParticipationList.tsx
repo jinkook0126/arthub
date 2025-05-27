@@ -32,7 +32,7 @@ function ParticipationList({ artList }: { artList: IArtPreivew[] }) {
               <ParticipationItem
                 key={`art-${art.id}`}
                 uri={`/auction/detail/${art.id}`}
-                imgUri={`${process.env.NEXT_PUBLIC_IMAGE_URL}${art.url}`}
+                imgUri={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${art.url}`}
               />
             ))}
           </Grid>
