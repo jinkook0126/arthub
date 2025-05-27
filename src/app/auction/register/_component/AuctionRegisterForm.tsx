@@ -9,7 +9,6 @@ import { auctionRgSchema, AuctionRgFormValues } from '@/schemas/AuctionRgSchema'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import dayjs from 'dayjs';
 import { ImageIcon } from './ImageIcon';
 
 function AuctionRegisterForm() {
@@ -70,15 +69,7 @@ function AuctionRegisterForm() {
     };
     reader.readAsDataURL(fileValue);
   };
-  const onRegister = async (values: AuctionRgFormValues) => {
-    const today = dayjs();
-    if (dayjs(values.artCreatedAt).isAfter(today, 'd')) {
-      setError('artCreatedAt', { message: '제작 날짜는 오늘 이전이여야 합니다.' });
-      return;
-    }
-    if (dayjs(values.auctionEndAt).isBefore(today)) {
-      setError('auctionEndAt', { message: '종료 날짜는 오늘 이후여야 합니다.' });
-    }
+  const onRegister = async () => {
     if (!image) {
       setError('root', { message: '사진을 업로드해주세요.' });
       return;
