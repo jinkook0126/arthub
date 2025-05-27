@@ -37,19 +37,34 @@ function MobileMenu({ isOpen, onClose }: Props) {
             <Divider my={6} />
             {status === 'authenticated' && (
               <Box>
-                <Link
-                  href='/mypage'
-                  as={NextLink}
-                  fontSize='1rem'
-                  fontWeight={500}
-                  color='gray.800'
-                  _hover={{
-                    textDecoration: 'none',
-                  }}
-                  onClick={onClose}
-                >
-                  마이페이지
-                </Link>
+                <VStack spacing={6} align='flex-start'>
+                  <Link
+                    href='/mypage'
+                    as={NextLink}
+                    fontSize='1rem'
+                    fontWeight={500}
+                    color='gray.800'
+                    _hover={{
+                      textDecoration: 'none',
+                    }}
+                    onClick={onClose}
+                  >
+                    마이페이지
+                  </Link>
+                  <Link
+                    href='/auction/register'
+                    as={NextLink}
+                    fontSize='1rem'
+                    fontWeight={500}
+                    color='gray.800'
+                    _hover={{
+                      textDecoration: 'none',
+                    }}
+                    onClick={onClose}
+                  >
+                    옥션등록
+                  </Link>
+                </VStack>
                 <Divider my={6} />
               </Box>
             )}
