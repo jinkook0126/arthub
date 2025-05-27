@@ -5,14 +5,54 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import { useForm } from 'react-hook-form';
 import { uploadImage } from '@/utils/supbaseActions';
+import { auctionRgSchema, AuctionRgFormValues } from '@/schemas/AuctionRgSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { ImageIcon } from './ImageIcon';
 
 function AuctionRegisterForm() {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    setError,
+    formState: { errors },
+  } = useForm<AuctionRgFormValues>({
+    resolver: zodResolver(auctionRgSchema),
+  });
   const toast = useToast();
-  const { handleSubmit } = useForm();
   const [image, setImage] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const router = useRouter();
+  const { mutate: createAuction, isPending } = useMutation({
+    mutationFn: async (data: AuctionRgFormValues) => {
+      const res = await fetch('/api/auction', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+      return res.json();
+    },
+    onSuccess: async res => {
+      toast({
+        title: res.success ? '경매 등록 성공' : '경매 등록 실패',
+        description: res.success ? '경매 등록이 완료되었습니다.' : res.error,
+        status: res.success ? 'success' : 'error',
+      });
+      if (res.success) {
+        router.back();
+      }
+    },
+    onError: () => {
+      toast({
+        title: '경매 등록 실패',
+        description: '경매 등록에 실패했습니다.',
+        status: 'error',
+      });
+    },
+  });
 
   const onChangeFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     const fileValue = e.target.files?.[0];
@@ -28,14 +68,21 @@ function AuctionRegisterForm() {
     reader.readAsDataURL(fileValue);
   };
   const onRegister = async () => {
-    const imageResult = await uploadImage({ file: image!, directory: 'art' });
+    if (!image) {
+      setError('url', { message: '사진을 업로드해주세요.' });
+      return;
+    }
+    const imageResult = await uploadImage({ file: image, directory: 'art' });
     if (!imageResult.success) {
       toast({
         title: '이미지 업로드 실패',
         description: imageResult.error,
         status: 'error',
       });
+      return;
     }
+    setValue('url', imageResult.filePath);
+    createAuction(getValues());
   };
   return (
     <form onSubmit={handleSubmit(onRegister)}>
@@ -73,18 +120,27 @@ function AuctionRegisterForm() {
                 사진 업로드
               </Button>
             </Center>
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.url?.message}
+            </Text>
           </Box>
           <Box>
             <Text paddingBottom='0.375rem' fontWeight={500}>
               작품명
             </Text>
-            <Input placeholder='작품명을 입력해주세요' />
+            <Input placeholder='작품명을 입력해주세요' {...register('artTitle')} />
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.artTitle?.message}
+            </Text>
           </Box>
           <Box>
             <Text paddingBottom='0.375rem' fontWeight={500}>
               작품설명
             </Text>
-            <Textarea placeholder='작품설명을 입력해주세요' resize='none' height='200px' />
+            <Textarea placeholder='작품설명을 입력해주세요' resize='none' height='200px' {...register('artDesc')} />
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.artDesc?.message}
+            </Text>
           </Box>
           <Box>
             <Flex gap='10px' alignItems='center' paddingBottom='0.375rem'>
@@ -93,7 +149,10 @@ function AuctionRegisterForm() {
                 <InfoOutlineIcon />
               </Tooltip>
             </Flex>
-            <Input placeholder='작품크기를 입력해주세요' />
+            <Input placeholder='작품크기를 입력해주세요' {...register('artSize')} />
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.artSize?.message}
+            </Text>
           </Box>
           <Box>
             <Flex gap='10px' alignItems='center' paddingBottom='0.375rem'>
@@ -102,13 +161,19 @@ function AuctionRegisterForm() {
                 <InfoOutlineIcon />
               </Tooltip>
             </Flex>
-            <Input placeholder='작품재료를 입력해주세요' />
+            <Input placeholder='작품재료를 입력해주세요' {...register('artMaterial')} />
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.artMaterial?.message}
+            </Text>
           </Box>
           <Box>
             <Text paddingBottom='0.375rem' fontWeight={500}>
               제작년도
             </Text>
-            <Input placeholder='제작년도를 입력해주세요' type='date' />
+            <Input placeholder='제작년도를 입력해주세요' {...register('artCreatedAt')} />
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.artCreatedAt?.message}
+            </Text>
           </Box>
         </Flex>
       </Box>
@@ -123,22 +188,48 @@ function AuctionRegisterForm() {
             <Text paddingBottom='0.375rem' fontWeight={500}>
               경매 시작가
             </Text>
-            <Input placeholder='시작가를 입력해주세요' type='number' />
+            <Input
+              placeholder='시작가를 입력해주세요'
+              type='number'
+              {...register('startingPrice', { valueAsNumber: true })}
+            />
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.startingPrice?.message}
+            </Text>
           </Box>
           <Box>
             <Text paddingBottom='0.375rem' fontWeight={500}>
               즉시 구매가
             </Text>
-            <Input placeholder='즉시 구매가를 입력해주세요' type='number' />
+            <Input
+              placeholder='즉시 구매가를 입력해주세요'
+              type='number'
+              {...register('buyoutPrice', { valueAsNumber: true })}
+            />
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.buyoutPrice?.message}
+            </Text>
           </Box>
           <Box>
             <Text paddingBottom='0.375rem' fontWeight={500}>
               경매 종료일
             </Text>
-            <Input placeholder='종료일을 입력해주세요' type='date' />
+            <Input placeholder='종료일을 입력해주세요' {...register('auctionEndAt')} />
+            <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+              {errors.auctionEndAt?.message}
+            </Text>
           </Box>
         </Flex>
       </Box>
+      <Flex mt='40px' gap='20px' mx='auto' justifyContent='center'>
+        <Button variant='outline' type='button' colorScheme='blue' onClick={() => router.back()}>
+          취소
+        </Button>
+        <Button type='submit' colorScheme='blue' isLoading={isPending}>
+          경매 등록
+        </Button>
+      </Flex>
+      <input type='hidden' {...register('url')} />
       <input type='file' hidden accept='image/*' ref={fileRef} onChange={onChangeFileInput} />
     </form>
   );
