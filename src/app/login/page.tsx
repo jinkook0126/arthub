@@ -22,9 +22,11 @@ function LoginPage() {
             이메일 찾기
           </Text>
           <Box w='0.0625rem' h='0.75rem' mx='0.75rem' bg='gray.300' />
-          <Text color='gray.500' fontSize='0.875rem'>
-            비밀번호 찾기
-          </Text>
+          <Link href='/find-account/password' as={NextLink}>
+            <Text color='gray.500' fontSize='0.875rem'>
+              비밀번호 찾기
+            </Text>
+          </Link>
           <Box w='0.0625rem' h='0.75rem' mx='0.75rem' bg='gray.300' />
           <Link href='/sign-up' as={NextLink}>
             <Text color='gray.500' fontSize='0.875rem'>
