@@ -18,9 +18,11 @@ function LoginPage() {
       <Card maxW='26.5rem' p={{ base: '2.5rem', xl: 0 }} mx='auto' boxShadow={{ base: undefined, xl: 'none' }}>
         <LoginForm />
         <Flex mt={4} align='center' justify='center' h='100%'>
-          <Text color='gray.500' fontSize='0.875rem'>
-            이메일 찾기
-          </Text>
+          <Link href='/find-account/email' as={NextLink}>
+            <Text color='gray.500' fontSize='0.875rem'>
+              이메일 찾기
+            </Text>
+          </Link>
           <Box w='0.0625rem' h='0.75rem' mx='0.75rem' bg='gray.300' />
           <Link href='/find-account/password' as={NextLink}>
             <Text color='gray.500' fontSize='0.875rem'>

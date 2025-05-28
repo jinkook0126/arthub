@@ -60,6 +60,7 @@ model User {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   creatorId  BigInt?
+  phone      String?      @unique
   BidHistory BidHistory[]
   Creators   Creators?    @relation(fields: [creatorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
