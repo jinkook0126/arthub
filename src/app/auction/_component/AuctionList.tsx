@@ -10,12 +10,18 @@ import { useAuctionState } from './AuctionContext';
 
 function AuctionList() {
   const { data } = useQuery({ queryKey: ['auction'], queryFn: getAuctionList });
-  const { saleStatus } = useAuctionState();
+  const { saleStatus, filter } = useAuctionState();
   const [order, setOrder] = useState<OrderOption>('최신순');
   const safeData = data?.art ?? [];
   const sortedList = useMemo(
     () =>
       [...safeData]
+        .filter(item => {
+          if (filter === '') {
+            return true;
+          }
+          return item.artTitle.includes(filter) || item.Creators.creatorName.includes(filter);
+        })
         .filter(item => {
           if (saleStatus === 'sale') {
             return item.isAuctionActive;
@@ -36,7 +42,7 @@ function AuctionList() {
               return 0;
           }
         }),
-    [data, order, saleStatus],
+    [data, order, saleStatus, filter],
   );
 
   if (!data) {

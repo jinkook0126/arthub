@@ -16,6 +16,14 @@ export async function POST(request: NextRequest) {
   if (!auction) {
     return NextResponse.json({ success: false, error: '작품이 존재하지 않습니다.' });
   }
+  await prisma.bidHistory.create({
+    data: {
+      artId: auctionIdx,
+      userId: session.user.id,
+      bidAmount: auction.buyoutPrice,
+      currAmount: auction.currentPrice,
+    },
+  });
   await prisma.art.update({
     where: { id: auctionIdx },
     data: {
