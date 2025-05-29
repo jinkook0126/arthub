@@ -4,6 +4,7 @@ export const signUpSchema = z
   .object({
     name: z.string().nonempty('이름을 입력해주세요.'),
     email: z.string().nonempty('이메일을 입력해주세요.').email({ message: '이메일 형식이 올바르지 않습니다.' }),
+    phone: z.string().regex(/^01[016789]-?\d{3,4}-?\d{4}$/, '휴대폰 번호 형식이 올바르지 않습니다.'),
     password: z
       .string({ required_error: '비밀번호를 입력해주세요.' })
       .min(8, { message: '비밀번호는 최소 8자 이상이어야 합니다.' })

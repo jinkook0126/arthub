@@ -25,7 +25,7 @@ function SignUpForm() {
     mutationFn: async (formData: SignupFormValues) => {
       const res = await fetch('/api/user', {
         method: 'POST',
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, phone: formData.phone.replace(/-/g, '') }),
       });
       return res.json();
     },
@@ -87,6 +87,19 @@ function SignUpForm() {
           />
           <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
             {errors.email?.message}
+          </Text>
+        </Box>
+        <Box>
+          <Text paddingBottom='0.375rem' fontWeight={500}>
+            휴대폰번호
+          </Text>
+          <Input
+            placeholder='ex) 010-1234-5678'
+            borderColor={errors.phone ? 'red.400' : 'gray.300'}
+            {...register('phone')}
+          />
+          <Text mt='0.25rem' fontSize='0.8rem' color='red.400'>
+            {errors.phone?.message}
           </Text>
         </Box>
         <Box>

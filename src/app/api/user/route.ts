@@ -7,7 +7,7 @@ import { auth } from '@/auth';
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
-  const { email, password, name } = await req.json();
+  const { email, password, name, phone } = await req.json();
   try {
     const hashed = await hash(password, 10);
     await prisma.user.create({
@@ -15,6 +15,7 @@ export async function POST(req: Request) {
         email,
         password: hashed,
         name,
+        phone,
       },
     });
     return NextResponse.json({ success: true });
