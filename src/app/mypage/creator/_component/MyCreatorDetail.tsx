@@ -16,6 +16,7 @@ import {
   Text,
   Textarea,
   useToast,
+  Grid,
 } from '@chakra-ui/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -25,6 +26,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { deleteImage, uploadImage } from '@/utils/supbaseActions';
 import { useSession } from 'next-auth/react';
+import MyCreatorDetailArt from './MyCreatorDetailArt';
 
 function MyCreatorDetail() {
   const { data: session } = useSession();
@@ -219,7 +221,17 @@ function MyCreatorDetail() {
               </Button>
             </Box>
           ) : (
-            <Box>{data?.art?.map(art => <Box key={art.id}>{art.url}</Box>)}</Box>
+            <Grid
+              templateColumns={{
+                base: 'repeat(2, 1fr)',
+                xl: 'repeat(3, 1fr)',
+              }}
+              rowGap='2.5rem'
+              columnGap='1.25rem'
+              mb='120px'
+            >
+              {data?.art?.map(art => <MyCreatorDetailArt key={art.id} art={art} />)}
+            </Grid>
           )}
         </Box>
       </Flex>

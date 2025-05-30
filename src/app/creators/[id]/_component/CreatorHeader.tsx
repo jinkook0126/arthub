@@ -66,7 +66,7 @@ function CreatorHeader({ creator, artList }: { creator: ICreator; artList: IArtP
 
           <Flex flexDir='column' justify='space-between' gap='1.25rem' w='100%'>
             <Box w='100%'>
-              <Text color='white' wordBreak='keep-all'>
+              <Text color='white' wordBreak='keep-all' whiteSpace='pre-wrap'>
                 {creator.creatorDesc}
               </Text>
             </Box>
