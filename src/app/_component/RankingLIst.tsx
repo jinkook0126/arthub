@@ -1,7 +1,8 @@
 'use client';
 
-import { Center, Flex, Button, Text, Box, useMediaQuery } from '@chakra-ui/react';
+import { Center, Flex, Button, Text, Box, useMediaQuery, Grid } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import NextLink from 'next/link';
 import RankingItem from './RankingItem';
 import RightIcon from './RightIcon';
 import getMain from '../_lib/getMain';
@@ -12,7 +13,6 @@ function RankingList() {
     queryKey: ['main'],
     queryFn: getMain,
   });
-  console.warn(data);
   if (!data || data.data.artList.length === 0) return null;
   return (
     <Box flexDir='column'>
@@ -29,6 +29,8 @@ function RankingList() {
         </Text>
         {isLargerThan768 && (
           <Button
+            as={NextLink}
+            href='/auction'
             rightIcon={<RightIcon />}
             variant='link'
             fontSize={{ base: '14px', md: '16px' }}
@@ -38,14 +40,14 @@ function RankingList() {
           </Button>
         )}
       </Flex>
-      <Flex gap='28px' justifyContent='space-between' flexDir={{ base: 'column', md: 'row' }}>
+      <Grid templateColumns={{ base: 'repeat(1,minmax(0,1fr))', md: 'repeat(5,minmax(0,1fr))' }} gap='28px'>
         {data.data.artList.map(art => (
-          <RankingItem key={art.id} src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${art.url}`} />
+          <RankingItem key={art.id} art={art} />
         ))}
-      </Flex>
+      </Grid>
       {!isLargerThan768 && (
         <Center>
-          <Button variant='outline' mt='3rem' alignSelf='center' size='lg'>
+          <Button variant='outline' mt='3rem' alignSelf='center' size='lg' as={NextLink} href='/auction'>
             <Text fontWeight={400}>전체 작품 보기</Text>
           </Button>
         </Center>

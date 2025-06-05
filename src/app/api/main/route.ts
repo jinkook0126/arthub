@@ -11,6 +11,13 @@ export async function GET() {
           gte: new Date(),
         },
       },
+      include: {
+        Creators: {
+          select: {
+            creatorName: true,
+          },
+        },
+      },
       orderBy: {
         currentPrice: 'desc',
       },

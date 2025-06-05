@@ -3,18 +3,16 @@
 import { Text, Flex, Image, Box, useMediaQuery } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { IArt } from '@/model/art';
 
-type Props = {
-  src: string;
-};
-function RankingItem({ src }: Props) {
+function RankingItem({ art }: { art: IArt }) {
   const [isLargerThan768] = useMediaQuery(['(min-width: 768px)']);
 
   const [isHover, setIsHover] = useState(false);
   return (
     <Flex
       as={Link}
-      href='/'
+      href={`/auction/detail/${art.id}`}
       position='relative'
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
@@ -34,7 +32,7 @@ function RankingItem({ src }: Props) {
           paddingBottom: '100%',
         }}
       >
-        <Image src={src} w='100%' flexShrink={0} />
+        <Image src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${art.url}`} w='100%' flexShrink={0} />
       </Flex>
       {isLargerThan768 ? (
         <Box position='absolute' left={0} top={0} w='100%' h='100%'>
@@ -58,28 +56,28 @@ function RankingItem({ src }: Props) {
             visibility={isHover ? 'visible' : 'hidden'}
           >
             <Text fontSize='16px' fontWeight={700}>
-              이진국
+              {art.Creators.creatorName}
             </Text>
-            <Text fontSize='13px'>크레용 신짱!!</Text>
+            <Text fontSize='13px'>{art.artTitle}</Text>
             <Text fontSize='13px' mt='8px' color='#C1C1C1'>
               현재가
             </Text>
             <Text fontSize='15px' fontWeight={700}>
-              100,000,000원
+              {art.currentPrice.toLocaleString()}원
             </Text>
           </Box>
         </Box>
       ) : (
         <Flex color='black' pl='12px' pb='12px' flexDir='column' justify='flex-end'>
           <Text fontSize='16px' fontWeight={700}>
-            이진국
+            {art.Creators.creatorName}
           </Text>
-          <Text fontSize='13px'>크레용 신짱!!</Text>
+          <Text fontSize='13px'>{art.artTitle}</Text>
           <Text fontSize='13px' mt='8px' color='gray.500'>
             현재가
           </Text>
           <Text fontSize='15px' fontWeight={700}>
-            100,000,000원
+            {art.currentPrice.toLocaleString()}원
           </Text>
         </Flex>
       )}
