@@ -1,13 +1,17 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
-import { Box, Flex, Img, HStack, Link, useMediaQuery, IconButton, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Img, HStack, Link, useMediaQuery, IconButton, useDisclosure, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import MobileMenu from './MobileMenu';
+import LoginNav from './LoginNav';
+import MyPagePopover from './MyPagePopover';
 
 function Header() {
+  const { status, data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThan992] = useMediaQuery('(min-width: 992px)');
   const pathName = usePathname();
@@ -44,7 +48,9 @@ function Header() {
           {isLargerThan992 ? (
             <Flex as='section' align='center' h='100%' w='100%' justify='space-between'>
               <Flex align='center'>
-                <Img src='/assets/logo.png' w={120} mr={30} />
+                <Box as={NextLink} href='/'>
+                  <Img src='/assets/logo.png' w={120} mr={30} />
+                </Box>
                 <nav>
                   <HStack spacing='18px'>
                     <Link
@@ -57,7 +63,7 @@ function Header() {
                         textDecoration: 'none',
                       }}
                     >
-                      옥션
+                      경매참여
                     </Link>
                     <Link
                       href='/creators'
@@ -70,42 +76,24 @@ function Header() {
                         textDecoration: 'none',
                       }}
                     >
-                      작가
+                      작가찾기
                     </Link>
                   </HStack>
                 </nav>
               </Flex>
               <Box>
-                <nav>
-                  <HStack spacing='18px'>
-                    <Link
-                      href='/'
-                      as={NextLink}
-                      fontSize='0.875rem'
-                      fontWeight={400}
-                      color='gray.800'
-                      textDecoration='none'
-                      _hover={{
-                        textDecoration: 'none',
-                      }}
-                    >
-                      nav A
-                    </Link>
-                    <Link
-                      href='/'
-                      as={NextLink}
-                      fontSize='0.875rem'
-                      fontWeight={400}
-                      color='gray.800'
-                      textDecoration='none'
-                      _hover={{
-                        textDecoration: 'none',
-                      }}
-                    >
-                      nav A
-                    </Link>
-                  </HStack>
-                </nav>
+                {status === 'authenticated' ? (
+                  <Flex align='center' gap='1rem'>
+                    {session?.user?.role === 'creator' && (
+                      <Button as={NextLink} href='/auction/register' colorScheme='blue' size='sm'>
+                        옥션등록
+                      </Button>
+                    )}
+                    <MyPagePopover />
+                  </Flex>
+                ) : (
+                  <LoginNav />
+                )}
               </Box>
             </Flex>
           ) : (
@@ -123,8 +111,9 @@ function Header() {
                   }}
                   icon={<HamburgerIcon w={6} h={6} color='gray.800' />}
                 />
-
-                <Img src='/assets/logo.png' w={120} />
+                <Box as={NextLink} href='/'>
+                  <Img src='/assets/logo.png' w={120} />
+                </Box>
               </Flex>
             </Flex>
           )}

@@ -3,8 +3,10 @@
 import { Flex, Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import SaleStatusTabs from './SaleStatusTabs';
+import { useAuctionUpdate } from './AuctionContext';
 
 function SearchFilter() {
+  const { setFilter } = useAuctionUpdate();
   return (
     <Flex
       as='section'
@@ -19,7 +21,7 @@ function SearchFilter() {
         <InputLeftElement pointerEvents='none'>
           <SearchIcon color='gray.300' />
         </InputLeftElement>
-        <Input type='tel' placeholder='작가, 작품명 검색' variant='flushed' />
+        <Input type='tel' placeholder='작가, 작품명 검색' variant='flushed' onChange={e => setFilter(e.target.value)} />
       </InputGroup>
     </Flex>
   );

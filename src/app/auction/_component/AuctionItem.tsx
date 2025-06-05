@@ -14,7 +14,7 @@ function AuctionItem({ art }: Props) {
   return (
     <GridItem
       as={NextLink}
-      href={`/auction/${art.id}`}
+      href={`/auction/detail/${art.id}`}
       w='100%'
       minH='376px'
       display='flex'
@@ -36,7 +36,7 @@ function AuctionItem({ art }: Props) {
       >
         <Box h={{ base: '11.875rem', sm: '15.75rem' }}>
           <Image
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${art.url}`}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${art.url}`}
             w='100%'
             h='100%'
             objectFit='contain'

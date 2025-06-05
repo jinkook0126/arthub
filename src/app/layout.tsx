@@ -6,6 +6,7 @@ import Provider from './provider';
 import Header from './_component/Header';
 import Footer from './_component/Footer';
 import RQProvider from './RQProvider';
+import AuthSessionProvider from './AuthSessionProvider';
 
 const naverNeoFonts = localFont({
   src: '../fonts/NanumSquareNeo-Variable.ttf',
@@ -26,15 +27,17 @@ export default function RootLayout({
   return (
     <html lang='en' className={naverNeoFonts.variable}>
       <body>
-        <Provider>
-          <RQProvider>
-            <Flex direction='column' justify='center' minH='100%'>
-              <Header />
-              {children}
-              <Footer />
-            </Flex>
-          </RQProvider>
-        </Provider>
+        <AuthSessionProvider>
+          <Provider>
+            <RQProvider>
+              <Flex direction='column' justify='center' minH='100%'>
+                <Header />
+                {children}
+                <Footer />
+              </Flex>
+            </RQProvider>
+          </Provider>
+        </AuthSessionProvider>
       </body>
     </html>
   );

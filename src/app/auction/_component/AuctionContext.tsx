@@ -2,11 +2,13 @@ import React, { createContext, useContext, useState, ReactNode, useMemo } from '
 
 interface AuctionState {
   saleStatus: 'sale' | 'end';
+  filter: string;
 }
 const AuctionContext = createContext<AuctionState | undefined>(undefined);
 const AuctionUpdateContext = createContext<
   | {
       setSaleStatus: (saleStatus: 'sale' | 'end') => void;
+      setFilter: (filter: string) => void;
     }
   | undefined
 >(undefined);
@@ -29,9 +31,10 @@ export const useAuctionUpdate = () => {
 
 export function AuctionProvider({ children }: { children: ReactNode }) {
   const [saleStatus, setSaleStatus] = useState<AuctionState['saleStatus']>('sale');
+  const [filter, setFilter] = useState<AuctionState['filter']>('');
 
-  const value = useMemo(() => ({ saleStatus }), [saleStatus]);
-  const updateValue = useMemo(() => ({ setSaleStatus }), [setSaleStatus]);
+  const value = useMemo(() => ({ saleStatus, filter }), [saleStatus, filter]);
+  const updateValue = useMemo(() => ({ setSaleStatus, setFilter }), [setSaleStatus, setFilter]);
   return (
     <AuctionContext.Provider value={value}>
       <AuctionUpdateContext.Provider value={updateValue}>{children}</AuctionUpdateContext.Provider>

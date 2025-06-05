@@ -31,8 +31,8 @@ function ParticipationList({ artList }: { artList: IArtPreivew[] }) {
             {artList.map(art => (
               <ParticipationItem
                 key={`art-${art.id}`}
-                uri={`/auction/${art.id}`}
-                imgUri={`${process.env.NEXT_PUBLIC_IMAGE_URL}${art.url}`}
+                uri={`/auction/detail/${art.id}`}
+                imgUri={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${art.url}`}
               />
             ))}
           </Grid>
