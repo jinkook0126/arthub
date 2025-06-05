@@ -20,12 +20,13 @@ export default function MobileLoginNav({ onClose }: { onClose: () => void }) {
         }}
         onClick={onClose}
       >
-        로그인
+        로그인 / 회원가입
         <ChevronRightIcon w={4} h={4} ml={1} />
       </Link>
       <Divider my={6} />
       <Link
-        href='/'
+        href='/sign-up/creator'
+        onClick={onClose}
         as={NextLink}
         fontSize='1rem'
         fontWeight={500}
@@ -34,7 +35,7 @@ export default function MobileLoginNav({ onClose }: { onClose: () => void }) {
           textDecoration: 'none',
         }}
       >
-        회원가입
+        작가가입
       </Link>
     </Box>
   );

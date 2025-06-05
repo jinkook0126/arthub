@@ -19,7 +19,7 @@ function LoginNav() {
           로그인 / 회원가입
         </Link>
         <Box
-          href='/login'
+          href='/sign-up/creator'
           as={NextLink}
           borderRadius='6px'
           px='14px'
