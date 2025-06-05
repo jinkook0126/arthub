@@ -1,12 +1,19 @@
 'use client';
 
 import { Center, Flex, Button, Text, Box, useMediaQuery } from '@chakra-ui/react';
-
+import { useQuery } from '@tanstack/react-query';
 import RankingItem from './RankingItem';
 import RightIcon from './RightIcon';
+import getMain from '../_lib/getMain';
 
 function RankingList() {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const { data } = useQuery({
+    queryKey: ['main'],
+    queryFn: getMain,
+  });
+  console.warn(data);
+  if (!data || data.data.artList.length === 0) return null;
   return (
     <Box flexDir='column'>
       <Flex
@@ -32,11 +39,9 @@ function RankingList() {
         )}
       </Flex>
       <Flex gap='28px' justifyContent='space-between' flexDir={{ base: 'column', md: 'row' }}>
-        <RankingItem src='/assets/image/sample/maru.png' />
-        <RankingItem src='/assets/image/sample/shinzzang.png' />
-        <RankingItem src='/assets/image/sample/kerokero.png' />
-        <RankingItem src='/assets/image/sample/shinzzang.png' />
-        <RankingItem src='/assets/image/sample/maru.png' />
+        {data.data.artList.map(art => (
+          <RankingItem key={art.id} src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${art.url}`} />
+        ))}
       </Flex>
       {!isLargerThan768 && (
         <Center>

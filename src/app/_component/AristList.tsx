@@ -1,8 +1,11 @@
 'use client';
 
 import { Center, Flex, Divider, Text, Box, Button, useMediaQuery } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import NextLink from 'next/link';
 import ArtistItem from './ArtistItem';
 import RightIcon from './RightIcon';
+import getMain from '../_lib/getMain';
 
 const lists = [
   {
@@ -31,6 +34,11 @@ const lists = [
 ];
 function ArtistList() {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)');
+  const { data } = useQuery({
+    queryKey: ['main'],
+    queryFn: getMain,
+  });
+  console.warn(data);
   return (
     <Box>
       <Flex
@@ -77,7 +85,7 @@ function ArtistList() {
       </Flex>
       {!isLargerThan768 && (
         <Center>
-          <Button variant='outline' mt='3rem' alignSelf='center' size='lg'>
+          <Button variant='outline' mt='3rem' alignSelf='center' size='lg' as={NextLink} href='/creators'>
             <Text fontWeight={400}>전체 아티스트 보기</Text>
           </Button>
         </Center>
