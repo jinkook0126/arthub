@@ -33,6 +33,9 @@ function MyPagePopover() {
               <Box w='100%' as={NextLink} href='/mypage' py='11px' onClick={onClose}>
                 <Text fontSize='1rem'>마이페이지</Text>
               </Box>
+              <Box w='100%' as={NextLink} href='/deposit' py='11px' onClick={onClose}>
+                <Text fontSize='1rem'>예치금만들기</Text>
+              </Box>
               <Box
                 w='100%'
                 as={NextLink}

@@ -52,6 +52,19 @@ function MobileMenu({ isOpen, onClose }: Props) {
                     마이페이지
                   </Link>
                   <Link
+                    href='/deposit'
+                    as={NextLink}
+                    fontSize='1rem'
+                    fontWeight={500}
+                    color='gray.800'
+                    _hover={{
+                      textDecoration: 'none',
+                    }}
+                    onClick={onClose}
+                  >
+                    예치금만들기
+                  </Link>
+                  <Link
                     href='/auction/register'
                     as={NextLink}
                     fontSize='1rem'
