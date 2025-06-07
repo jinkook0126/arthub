@@ -3,6 +3,7 @@
 import { Box, Flex, Text, Grid } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
+import dayjs from 'dayjs';
 import OrderButtonList, { type OrderOption } from './OrderButtonList';
 import AuctionItem from './AuctionItem';
 import getAuctionList from '../_lib/getAuctionList';
@@ -16,6 +17,15 @@ function AuctionList() {
   const sortedList = useMemo(
     () =>
       [...safeData]
+        .map(item => {
+          if (dayjs(item.auctionEndAt).isBefore(dayjs())) {
+            return {
+              ...item,
+              isAuctionActive: false,
+            };
+          }
+          return item;
+        })
         .filter(item => {
           if (filter === '') {
             return true;
