@@ -1,0 +1,20 @@
+name: Daily API Call
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 매일 00:00 UTC (한국 시간으로는 오전 9시)
+  workflow_dispatch: # 수동 실행도 가능하도록 추가
+
+jobs:
+  call-api:
+    if: false # github action 사용 시 라인 삭제
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call API Endpoint
+        run: |
+          curl -f -X POST ${{ vars.NEXT_SERVER_URL }}/api/auction/schedule \
+            -H "Content-Type: application/json"
+      
+      - name: Notify schedule trigger
+        run: echo "Calling API: ${{ vars.NEXT_SERVER_URL }}/api/auction/schedule"
