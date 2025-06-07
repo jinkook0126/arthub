@@ -22,7 +22,12 @@ export async function POST(req: Request) {
     }
     return NextResponse.json({
       success: true,
-      user: { ...user, creatorId: Number(user.creatorId), role: user.creatorId ? 'creator' : 'user' },
+      user: {
+        ...user,
+        creatorId: Number(user.creatorId),
+        role: user.creatorId ? 'creator' : 'user',
+        balance: user.deposit,
+      },
     });
   } catch (e) {
     if (e instanceof PrismaClientKnownRequestError) {

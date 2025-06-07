@@ -14,9 +14,14 @@ function MobileLoginMypage({ onClose }: { onClose: () => void }) {
         <Text fontSize='16px' fontWeight='bold'>
           {session?.user?.name} 고객님
         </Text>
-        <Text fontSize='14px' lineHeight='20px' mt='4px' color='black.100'>
-          안녕하세요.
-        </Text>
+        <Flex align='center' justify='space-between' mt='4px'>
+          <Text fontSize='14px' color='black.100'>
+            예치금
+          </Text>
+          <Text fontSize='14px' fontWeight='bold' color='blue.400'>
+            {session?.user?.balance.toLocaleString()}원
+          </Text>
+        </Flex>
       </Box>
       <Flex gap='8px'>
         <Center

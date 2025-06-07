@@ -16,7 +16,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
-import { IBaseResponse } from '@/model/common';
+import { IBaseResponseWithData } from '@/model/common';
 import useArtDetail from '../_lib/useArtDetail';
 
 export function BidBtn() {
@@ -26,9 +26,13 @@ export function BidBtn() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [price, setPrice] = useState(0);
   const toast = useToast();
-  const { status } = useSession();
+  const { status, update } = useSession();
 
-  const { mutate, isPending } = useMutation<IBaseResponse, Error, { idx: number; price: number }>({
+  const { mutate, isPending } = useMutation<
+    IBaseResponseWithData<{ balance: number }>,
+    Error,
+    { idx: number; price: number }
+  >({
     mutationFn: async (params: { idx: number; price: number }) => {
       const res = await fetch('/api/auction/bid', {
         method: 'post',
@@ -39,7 +43,7 @@ export function BidBtn() {
       });
       return res.json();
     },
-    onSuccess: res => {
+    onSuccess: async res => {
       if (res.success) {
         onClose();
         setPrice(0);
@@ -48,6 +52,7 @@ export function BidBtn() {
           title: '응찰 완료',
           status: 'success',
         });
+        await update({ user: { balance: res.data.balance } });
         return;
       }
       toast({

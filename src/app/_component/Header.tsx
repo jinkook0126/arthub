@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
-import { Box, Flex, Img, HStack, Link, useMediaQuery, IconButton, useDisclosure, Button } from '@chakra-ui/react';
+import { Box, Flex, Img, HStack, Link, useMediaQuery, IconButton, useDisclosure, Button, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import MobileMenu from './MobileMenu';
 import LoginNav from './LoginNav';
@@ -84,11 +84,22 @@ function Header() {
               <Box>
                 {status === 'authenticated' ? (
                   <Flex align='center' gap='1rem'>
-                    {session?.user?.role === 'creator' && (
-                      <Button as={NextLink} href='/auction/register' colorScheme='blue' size='sm'>
-                        옥션등록
-                      </Button>
-                    )}
+                    <Flex align='center' gap='1rem'>
+                      {session?.user?.role === 'creator' && (
+                        <Button as={NextLink} href='/auction/register' colorScheme='blue' size='sm'>
+                          옥션등록
+                        </Button>
+                      )}
+                      <Box border='1px solid' borderColor='gray.200' borderRadius='0.5rem' py='0.2rem' px='0.5rem'>
+                        <Text fontSize='0.875rem' color='gray.500'>
+                          예치금
+                          <Text as='span' fontWeight={700} pl='1rem' color='blue.400'>
+                            {session?.user?.balance.toLocaleString()}원
+                          </Text>
+                        </Text>
+                      </Box>
+                    </Flex>
+
                     <MyPagePopover />
                   </Flex>
                 ) : (

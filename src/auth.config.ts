@@ -34,7 +34,17 @@ export default {
         return { ...token, ...user };
       }
       if (trigger === 'update') {
-        return { ...token, role: session.user.role, creatorId: session.user.creatorId };
+        const updatedToken = { ...token };
+        if (session.user.balance) {
+          updatedToken.balance = session.user.balance;
+        }
+        if (session.user.creatorId) {
+          updatedToken.creatorId = session.user.creatorId;
+        }
+        if (session.user.role) {
+          updatedToken.role = session.user.role;
+        }
+        return updatedToken;
       }
       return token;
     },
@@ -46,6 +56,7 @@ export default {
           role: token.role as string,
           id: token.id as string,
           creatorId: token.creatorId as number,
+          balance: token.balance as number,
         },
       };
     },

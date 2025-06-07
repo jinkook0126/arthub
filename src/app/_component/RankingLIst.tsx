@@ -13,7 +13,7 @@ function RankingList() {
     queryKey: ['main'],
     queryFn: getMain,
   });
-  if (!data || data.data.artList.length === 0) return null;
+  if (!data) return null;
   return (
     <Box flexDir='column'>
       <Flex
@@ -40,11 +40,19 @@ function RankingList() {
           </Button>
         )}
       </Flex>
-      <Grid templateColumns={{ base: 'repeat(1,minmax(0,1fr))', md: 'repeat(5,minmax(0,1fr))' }} gap='28px'>
-        {data.data.artList.map(art => (
-          <RankingItem key={art.id} art={art} />
-        ))}
-      </Grid>
+      {data.data.artList.length > 0 ? (
+        <Grid templateColumns={{ base: 'repeat(1,minmax(0,1fr))', md: 'repeat(5,minmax(0,1fr))' }} gap='28px'>
+          {data.data.artList.map(art => (
+            <RankingItem key={art.id} art={art} />
+          ))}
+        </Grid>
+      ) : (
+        <Box mt='2rem' textAlign='center'>
+          <Text color='gray.500' fontWeight={700}>
+            경매 진행중인 상품이 없습니다.
+          </Text>
+        </Box>
+      )}
       {!isLargerThan768 && (
         <Center>
           <Button variant='outline' mt='3rem' alignSelf='center' size='lg' as={NextLink} href='/auction'>

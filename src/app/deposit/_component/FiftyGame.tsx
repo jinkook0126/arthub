@@ -3,6 +3,9 @@
 import { Box, Text, Grid, GridItem, Card, Button, keyframes } from '@chakra-ui/react';
 import { shuffleNumbers } from '@/utils/shuffle';
 import { useState, useEffect, useRef } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
+import { IBaseResponse } from '@/model/common';
 
 const shake = keyframes`
   0% { transform: translateX(0); }
@@ -14,6 +17,7 @@ const shake = keyframes`
 `;
 
 function FiftyGame() {
+  const { update } = useSession();
   const [remaining, setRemaining] = useState(100);
   const startTimeRef = useRef<number>(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -21,6 +25,26 @@ function FiftyGame() {
   const [gameStatus, setGameStatus] = useState<'start' | 'idle' | 'win' | 'lose'>('idle');
   const [isError, setIsError] = useState<boolean>(false);
   const [card, setCard] = useState<number[]>([]);
+  const { mutate: depositUpdate } = useMutation<IBaseResponse, Error, number>({
+    mutationFn: async (amount: number) => {
+      const response = await fetch('/api/user/deposit', {
+        method: 'POST',
+        body: JSON.stringify({ amount }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to deposit');
+      }
+      return response.json();
+    },
+    onSuccess: async (res, amount) => {
+      if (res.success) {
+        await update({ user: { balance: amount } });
+      }
+    },
+    onMutate: () => {
+      setGameStatus('win');
+    },
+  });
   useEffect(() => {
     if (card.length === 0) {
       setCard(shuffleNumbers());
@@ -34,7 +58,7 @@ function FiftyGame() {
     setCard(prev => prev.map(item => (item === selectedNumber ? item + 40 : item)));
     currentNumber.current = selectedNumber;
     if (selectedNumber === 40) {
-      setGameStatus('win');
+      depositUpdate(remaining * 10000);
     }
   };
   useEffect(() => {
